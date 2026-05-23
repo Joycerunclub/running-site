@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>配速計算機 - YourBrand 跑步</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">YourBrand <span>跑步</span></a>
+  <button class="hamburger" id="hamburger">&#9776;</button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">首頁</a></li>
+    <li><a href="courses.html">所有課程</a></li>
+    <li><a href="calculator.html">配速計算</a></li>
+    <li><a href="contact.html">聯絡我們</a></li>
+    <li><a href="courses.html" class="nav-cta">立即報名</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="section-label light">工具</div>
+  <h1 class="page-title">跑者計算機</h1>
+  <p class="page-sub">輸入你的成績，預測等效配速與訓練區間</p>
+</div>
+
+<section class="calc-section">
+  <!-- VDOT Calculator -->
+  <div class="calc-card reveal">
+    <h2 class="calc-title">⚡ VDOT 跑步能力預測</h2>
+    <p class="calc-sub">輸入你的比賽距離與完賽時間，預測你在其他距離的等效成績</p>
+
+    <div class="calc-form">
+      <div class="form-row">
+        <label>選擇距離</label>
+        <div class="distance-btns">
+          <button class="dist-btn active" data-dist="5">5K</button>
+          <button class="dist-btn" data-dist="10">10K</button>
+          <button class="dist-btn" data-dist="21.0975">半馬</button>
+          <button class="dist-btn" data-dist="42.195">全馬</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>完賽時間</label>
+        <div class="time-inputs">
+          <div class="time-input-wrap">
+            <input type="number" id="hours" min="0" max="9" placeholder="0" />
+            <span>時</span>
+          </div>
+          <div class="time-input-wrap">
+            <input type="number" id="minutes" min="0" max="59" placeholder="00" />
+            <span>分</span>
+          </div>
+          <div class="time-input-wrap">
+            <input type="number" id="seconds" min="0" max="59" placeholder="00" />
+            <span>秒</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn-primary calc-btn" onclick="calcVDOT()">計算</button>
+    </div>
+
+    <div id="vdot-result" class="calc-result hidden">
+      <div class="result-header">
+        <div class="result-vdot">
+          <div class="result-label">VDOT</div>
+          <div class="result-num" id="vdot-value">—</div>
+        </div>
+        <div class="result-pace">
+          <div class="result-label">平均配速</div>
+          <div class="result-num" id="avg-pace">—</div>
+        </div>
+      </div>
+      <h3 style="margin:32px 0 16px;font-family:'Noto Serif TC',serif;">等效成績預測</h3>
+      <div class="equiv-grid" id="equiv-grid"></div>
+      <h3 style="margin:32px 0 16px;font-family:'Noto Serif TC',serif;">建議訓練配速</h3>
+      <div class="training-zones" id="training-zones"></div>
+    </div>
+  </div>
+
+  <!-- Pace Calculator -->
+  <div class="calc-card reveal">
+    <h2 class="calc-title">🏃 配速計算機</h2>
+    <p class="calc-sub">計算目標配速、完賽時間或距離</p>
+
+    <div class="tab-btns">
+      <button class="tab-btn active" onclick="switchTab('pace')">求配速</button>
+      <button class="tab-btn" onclick="switchTab('time')">求完賽時間</button>
+    </div>
+
+    <!-- Tab: 求配速 -->
+    <div id="tab-pace" class="tab-content">
+      <div class="form-row">
+        <label>距離 (km)</label>
+        <input type="number" id="p-dist" placeholder="例：42.195" step="0.001" />
+      </div>
+      <div class="form-row">
+        <label>目標完賽時間</label>
+        <div class="time-inputs">
+          <div class="time-input-wrap"><input type="number" id="p-h" placeholder="0" min="0" /><span>時</span></div>
+          <div class="time-input-wrap"><input type="number" id="p-m" placeholder="00" min="0" max="59" /><span>分</span></div>
+          <div class="time-input-wrap"><input type="number" id="p-s" placeholder="00" min="0" max="59" /><span>秒</span></div>
+        </div>
+      </div>
+      <button class="btn-primary calc-btn" onclick="calcPace()">計算配速</button>
+      <div id="pace-result" class="simple-result hidden">
+        目標配速：<strong id="pace-output"></strong>
+      </div>
+    </div>
+
+    <!-- Tab: 求完賽時間 -->
+    <div id="tab-time" class="tab-content hidden">
+      <div class="form-row">
+        <label>距離 (km)</label>
+        <input type="number" id="t-dist" placeholder="例：42.195" step="0.001" />
+      </div>
+      <div class="form-row">
+        <label>目標配速 (分:秒 / km)</label>
+        <div class="time-inputs">
+          <div class="time-input-wrap"><input type="number" id="t-m" placeholder="05" min="0" /><span>分</span></div>
+          <div class="time-input-wrap"><input type="number" id="t-s" placeholder="30" min="0" max="59" /><span>秒</span></div>
+        </div>
+      </div>
+      <button class="btn-primary calc-btn" onclick="calcTime()">計算完賽時間</button>
+      <div id="time-result" class="simple-result hidden">
+        預計完賽時間：<strong id="time-output"></strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">YourBrand 跑步</div>
+    <div class="footer-links-group">
+      <a href="index.html">首頁</a>
+      <a href="courses.html">課程</a>
+      <a href="calculator.html">配速計算</a>
+      <a href="contact.html">聯絡</a>
+    </div>
+    <div class="footer-copy">© 2025 YourBrand. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+// ── VDOT Logic ──
+let selectedDist = 5;
+document.querySelectorAll('.dist-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.dist-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedDist = parseFloat(btn.dataset.dist);
+  });
+});
+
+function calcVDOT() {
+  const h = parseInt(document.getElementById('hours').value) || 0;
+  const m = parseInt(document.getElementById('minutes').value) || 0;
+  const s = parseInt(document.getElementById('seconds').value) || 0;
+  const totalSec = h * 3600 + m * 60 + s;
+  if (totalSec === 0) { alert('請輸入完賽時間'); return; }
+
+  const dist = selectedDist * 1000; // meters
+  const t = totalSec / 60; // minutes
+
+  // Jack Daniels VDOT formula
+  const vo2 = (-4.60 + 0.182258 * (dist / t) + 0.000104 * Math.pow(dist / t, 2));
+  const pct  = (0.8 + 0.1894393 * Math.exp(-0.012778 * t) + 0.2989558 * Math.exp(-0.1932605 * t));
+  const vdot = Math.round(vo2 / pct * 10) / 10;
+
+  document.getElementById('vdot-value').textContent = vdot.toFixed(1);
+  const pacePerKm = totalSec / (selectedDist);
+  document.getElementById('avg-pace').textContent = formatPace(pacePerKm) + '/km';
+
+  // Equivalent races
+  const races = [
+    { name: '1500m', dist: 1.5 },
+    { name: '3000m', dist: 3 },
+    { name: '5K', dist: 5 },
+    { name: '10K', dist: 10 },
+    { name: '半馬', dist: 21.0975 },
+    { name: '全馬', dist: 42.195 },
+  ];
+
+  const equivGrid = document.getElementById('equiv-grid');
+  equivGrid.innerHTML = '';
+  races.forEach(r => {
+    const predSec = predictTime(vdot, r.dist);
+    const el = document.createElement('div');
+    el.className = 'equiv-item';
+    el.innerHTML = `<div class="equiv-dist">${r.name}</div><div class="equiv-time">${formatTime(predSec)}</div><div class="equiv-pace">${formatPace(predSec / r.dist)}/km</div>`;
+    equivGrid.appendChild(el);
+  });
+
+  // Training zones (Jack Daniels)
+  const zones = [
+    { name: 'E 輕鬆跑', pct: [0.59, 0.74], desc: '日常有氧基礎訓練' },
+    { name: 'M 馬拉松配速', pct: [0.75, 0.84], desc: '馬拉松比賽配速練習' },
+    { name: 'T 節奏跑', pct: [0.83, 0.88], desc: '提升乳酸閾值' },
+    { name: 'I 間歇跑', pct: [0.95, 1.00], desc: '提升最大攝氧量' },
+    { name: 'R 重複跑', pct: [1.05, 1.15], desc: '提升跑步經濟性' },
+  ];
+
+  const zoneEl = document.getElementById('training-zones');
+  zoneEl.innerHTML = '';
+  const maxPace = pacePerKm;
+  zones.forEach(z => {
+    const fastPace = maxPace / z.pct[1];
+    const slowPace = maxPace / z.pct[0];
+    const el = document.createElement('div');
+    el.className = 'zone-item';
+    el.innerHTML = `
+      <div class="zone-name">${z.name}</div>
+      <div class="zone-pace">${formatPace(fastPace)} – ${formatPace(slowPace)} /km</div>
+      <div class="zone-desc">${z.desc}</div>`;
+    zoneEl.appendChild(el);
+  });
+
+  document.getElementById('vdot-result').classList.remove('hidden');
+}
+
+function predictTime(vdot, dist) {
+  // Approximate: iterate to find time T where VDOT matches
+  const d = dist * 1000;
+  let lo = 60, hi = 36000, mid;
+  for (let i = 0; i < 50; i++) {
+    mid = (lo + hi) / 2;
+    const t = mid / 60;
+    const v2 = (-4.60 + 0.182258 * (d / t) + 0.000104 * Math.pow(d / t, 2));
+    const p  = (0.8 + 0.1894393 * Math.exp(-0.012778 * t) + 0.2989558 * Math.exp(-0.1932605 * t));
+    const v = v2 / p;
+    if (v > vdot) lo = mid; else hi = mid;
+  }
+  return Math.round(mid);
+}
+
+function formatTime(sec) {
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = Math.floor(sec % 60);
+  if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  return `${m}:${String(s).padStart(2,'0')}`;
+}
+
+function formatPace(secPerKm) {
+  const m = Math.floor(secPerKm / 60);
+  const s = Math.floor(secPerKm % 60);
+  return `${m}'${String(s).padStart(2,'0')}"`;
+}
+
+// ── Pace Calculator ──
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0&&tab==='pace')||(i===1&&tab==='time')));
+  document.getElementById('tab-pace').classList.toggle('hidden', tab !== 'pace');
+  document.getElementById('tab-time').classList.toggle('hidden', tab !== 'time');
+}
+
+function calcPace() {
+  const dist = parseFloat(document.getElementById('p-dist').value);
+  const h = parseInt(document.getElementById('p-h').value) || 0;
+  const m = parseInt(document.getElementById('p-m').value) || 0;
+  const s = parseInt(document.getElementById('p-s').value) || 0;
+  const totalSec = h * 3600 + m * 60 + s;
+  if (!dist || !totalSec) { alert('請填入距離與時間'); return; }
+  const pacePerKm = totalSec / dist;
+  document.getElementById('pace-output').textContent = formatPace(pacePerKm) + ' / km';
+  document.getElementById('pace-result').classList.remove('hidden');
+}
+
+function calcTime() {
+  const dist = parseFloat(document.getElementById('t-dist').value);
+  const pm = parseInt(document.getElementById('t-m').value) || 0;
+  const ps = parseInt(document.getElementById('t-s').value) || 0;
+  const pacePerKm = pm * 60 + ps;
+  if (!dist || !pacePerKm) { alert('請填入距離與配速'); return; }
+  const totalSec = pacePerKm * dist;
+  document.getElementById('time-output').textContent = formatTime(totalSec);
+  document.getElementById('time-result').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
