@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跑者補給指南 - 有意思跑步訓練班</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+.nutrition-section { padding: 60px 80px; }
+
+/* 補給分類 tabs */
+.cat-tabs { display: flex; gap: 0; margin-bottom: 48px; flex-wrap: wrap; }
+.cat-tab {
+  padding: 12px 24px; font-size: 13px; letter-spacing: 0.08em;
+  border: 1.5px solid var(--border); background: none;
+  cursor: pointer; transition: all .2s;
+  font-family: 'Noto Sans TC', sans-serif; margin-right: -1px;
+}
+.cat-tab.active { background: #c8a84b; color: #fff; border-color: #c8a84b; z-index: 1; }
+.cat-tab:hover:not(.active) { border-color: #c8a84b; color: #8b6f20; }
+
+/* 補給卡片 */
+.nutrition-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.nutrition-card {
+  background: #fff; border: 1px solid var(--border);
+  overflow: hidden; transition: transform .3s, box-shadow .3s;
+}
+.nutrition-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(0,0,0,0.08); }
+.nc-header {
+  padding: 24px; display: flex; align-items: center; gap: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.nc-icon { font-size: 36px; flex-shrink: 0; }
+.nc-name { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; }
+.nc-cat { font-size: 11px; letter-spacing: 0.1em; color: #8b6f20; margin-top: 2px; }
+.nc-body { padding: 20px; }
+.nc-timing {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px;
+}
+.timing-tag {
+  font-size: 10px; padding: 3px 10px; border-radius: 1px;
+  border: 1px solid;
+}
+.timing-before { background: rgba(200,168,75,0.1); color: #8b6f20; border-color: rgba(200,168,75,0.3); }
+.timing-during { background: rgba(45,74,45,0.1); color: #2d4a2d; border-color: rgba(45,74,45,0.3); }
+.timing-after { background: rgba(184,92,56,0.1); color: #b85c38; border-color: rgba(184,92,56,0.3); }
+.nc-desc { font-size: 13px; color: var(--muted); line-height: 1.9; margin-bottom: 16px; }
+.nc-effect {
+  background: rgba(200,168,75,0.06); border-left: 3px solid #c8a84b;
+  padding: 12px 14px; font-size: 12px; color: var(--text); line-height: 1.8;
+}
+.nc-effect strong { color: #8b6f20; }
+.nc-caution {
+  margin-top: 12px; font-size: 12px; color: #b85c38;
+  display: flex; gap: 6px; align-items: flex-start; line-height: 1.7;
+}
+.nc-caution::before { content: '⚠️'; flex-shrink: 0; }
+
+/* 時機總表 */
+.timing-table { width: 100%; border-collapse: collapse; margin-top: 32px; }
+.timing-table th {
+  background: #1a1a1a; color: #fff; padding: 14px 20px;
+  font-size: 12px; letter-spacing: 0.1em; text-align: left; font-weight: 600;
+}
+.timing-table td { padding: 14px 20px; border-bottom: 1px solid var(--border); font-size: 13px; }
+.timing-table tr:nth-child(even) td { background: var(--cream); }
+.timing-table tr:hover td { background: rgba(200,168,75,0.05); }
+
+/* 統計卡 */
+.stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin-bottom: 48px; }
+.stat-card { background: #fff; border: 1px solid var(--border); padding: 24px; text-align: center; }
+.stat-card .big-num { font-family: 'DM Serif Display', serif; font-size: 40px; color: #c8a84b; line-height: 1; }
+.stat-card .stat-lbl { font-size: 12px; color: var(--muted); margin-top: 6px; letter-spacing: 0.08em; }
+
+.hidden-cat { display: none; }
+
+@media (max-width: 900px) {
+  .nutrition-section { padding: 40px 20px; }
+  .nutrition-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .cat-tab { font-size: 12px; padding: 10px 16px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">有意思 <span>跑步訓練班</span></a>
+  <button class="hamburger" id="hamburger">&#9776;</button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">首頁</a></li>
+    <li><a href="coaches.html">師資介紹</a></li>
+    <li><a href="courses.html">課程方案</a></li>
+    <li><a href="calculator.html">跑步工具</a></li>
+    <li><a href="nutrition.html">補給指南</a></li>
+    <li><a href="contact.html">聯絡我們</a></li>
+    <li><a href="courses.html" class="nav-cta">立即報名</a></li>
+  </ul>
+</nav>
+
+<div class="page-header" style="background:#1a1410;">
+  <div class="section-label light">◆ 跑者補給指南</div>
+  <h1 class="page-title">吃對補給，跑出好成績</h1>
+  <p class="page-sub">訓練前、中、後的補給策略，幫你維持最佳狀態</p>
+</div>
+
+<section class="nutrition-section">
+
+  <!-- 統計數字 -->
+  <div class="stats-row reveal">
+    <div class="stat-card">
+      <div class="big-num">3</div>
+      <div class="stat-lbl">補給時間點</div>
+    </div>
+    <div class="stat-card">
+      <div class="big-num">10+</div>
+      <div class="stat-lbl">補給品介紹</div>
+    </div>
+    <div class="stat-card">
+      <div class="big-num">30</div>
+      <div class="stat-lbl">訓練後補充黃金分鐘</div>
+    </div>
+    <div class="stat-card">
+      <div class="big-num">💧</div>
+      <div class="stat-lbl">水分補充最重要</div>
+    </div>
+  </div>
+
+  <!-- 分類 Tab -->
+  <div class="cat-tabs">
+    <button class="cat-tab active" onclick="filterCat('all')">全部</button>
+    <button class="cat-tab" onclick="filterCat('before')">訓練前</button>
+    <button class="cat-tab" onclick="filterCat('during')">訓練中</button>
+    <button class="cat-tab" onclick="filterCat('after')">訓練後</button>
+    <button class="cat-tab" onclick="filterCat('daily')">日常保養</button>
+  </div>
+
+  <!-- 補給卡片 -->
+  <div class="nutrition-grid reveal">
+
+    <!-- 香蕉 -->
+    <div class="nutrition-card" data-cat="before after">
+      <div class="nc-header">
+        <div class="nc-icon">🍌</div>
+        <div>
+          <div class="nc-name">香蕉</div>
+          <div class="nc-cat">天然食物補給</div>
+        </div>
+      </div>
+      <div class="nc-body">
+        <div class="nc-timing">
+          <span class="timing-tag timing-before">訓練前 30–60 分</span>
+          <span class="timing-tag timing-after">訓練後</span>
+        </div>
+        <p class="nc-desc">最方便的天然補給品！富含碳水化合物與鉀，能快速提供能量並預防抽筋。</p>
+        <div class="nc-effect">
+          <strong>主要功效：</strong><br>
+          · 快速補充醣類能量<br>
+          · 鉀離子預防肌肉抽筋<br>
+          · 訓練後協助肌糖原恢復
+        </div>
+      </div>
+    </div>
+
+    <!-- 能量棒 / 能量膠 -->
+    <div class="nutrition-card" data-cat="before during">
+      <div class="nc-header">
+        <div class="nc-icon">⚡</div>
+        <div>
+          <div class="nc-name">能量膠 / 能量棒</div>
+          <div class="nc-cat">運動補給品</div>
+        </div>
+      </div>
+      <div class="nc-body">
+        <div class="nc-timing">
+          <span class="timing-tag timing-before">訓練前 15–30 分</span>
+          <span class="timing-tag timing-during">訓練中 每 45 分</span>
+        </div>
+        <p class="nc-desc">長距離跑步必備！快速消化吸收，在跑步中維持血糖穩定，避免「撞牆期」。</p>
+        <div class="nc-effect">
+          <strong>主要功效：</strong><br>
+          · 快速補充醣類（20–30g/包）<br>
+          · 部分含咖啡因提升專注力<br>
+          · 避免長跑後期能量耗盡
+        </div>
+        <div class="nc-caution">搭配水一起服用，避免腸胃不適</div>
+      </div>
+    </div>
+
+    <!-- 電解質 -->
+    <div class="nutrition-card" data-cat="during after">
+      <div class="nc-header">
+        <div class="nc-icon">💧</div>
+        <div>
+          <div class="nc-name">電解質補充</div>
+          <div class="nc-cat">水分 / 礦物質</div>
+        </div>
+      </div>
+      <div class="nc-body">
+        <div class="nc-timing">
+          <span class="timing-tag timing-during">訓練中</span>
+          <span class="timing-tag timing-after">訓練後</span>
+        </div>
+        <p class="nc-desc">流汗會大量流失鈉、鉀、鎂等礦物質。純喝水不夠，電解質補充才能維持身體機能。</p>
+        <div class="nc-effect">
+          <strong>主要功效：</strong><br>
+          · 補充流汗流失的礦物質<br>
+          · 維持肌肉正常收縮<br>
+          · 預防低血鈉與抽筋
+        </div>
+        <div class="nc-caution">天氣熱或跑超過 60 分鐘時特別重要</div>
+      </div>
+    </div>
+
+    <!-- 蛋白質 -->
+    <div class="nutrition-card" data-cat="after">
+      <div class="nc-header">
+        <div class="nc-icon">🥩</div>
+        <div>
+          <div class="nc-name">蛋白質補充</div>
+          <div class="nc-cat">肌肉修復</div>
+        </div>
+      </div>
+      <div class="nc-body">
+        <div class="nc-timing">
+          <span class="timing-tag timing-after">訓練後 30 分內</span>
+        </div>
+        <p class="nc-desc">訓練後的黃金 30 分鐘！補充蛋白質幫助肌肉修復與生長，加速恢復。</p>
+        <div class="nc-effect">
+          <strong>建議來源：</strong><br>
+          · 雞胸肉、水煮蛋（天然最好）<br>
+          · 乳清蛋白（方便快速）<br>
+          · 豆漿 / 希臘優格（植物性）<br>
+          · 建議攝取量：20–40g
+        </div>
+      </div>
+    </div>
+
+    <!-- 咖啡因 -->
+    <div class="nutrition-card" data-cat="before">
+      <div class="nc-header">
+        <div class="nc-icon">☕</div>
+        <div>
+          <div class="nc-name">咖啡因</div>
+          <div class="nc-cat">提升表現</div>
+        </div>
+      </div>
+      <div class="nc-body">
+        <div class="nc-timing">
+          <span class="timing-tag timing-before">訓練前 45–60 分</span>
+        </div>
+        <p class="nc-desc">科學證實可提升耐力運動表現！適量咖啡因能提高專注力、降低疲勞感。</p>
+        <div class="nc-effect">
+          <strong>主要功效：</strong><br>
+          · 提升有氧運動表現 3–5%<br>
+          · 降低主觀疲勞感<br>
+          · 建議劑量：3–6 mg/kg 體重
+        </div>
+        <div class="nc-caution">下午三點後避免使用，影響睡眠品質</div>
+      </div>
+    </div>
+
+    <!-- 碳水化合物 -->
+    <div class="nutrition-card" data-cat="before after">
+      <div class="nc-header">
+        <div class="nc-icon">🍚</div>
+        <div>
+          <div class="nc-name">碳水化合物</div>
+          <div class="nc-cat">能量來源</div>
+        </div>
+      </div>
+      <div class="nc-body">
+        <div class="nc-timing">
+          <span class="timing-tag timing-before">訓練前 2–3 小時</span>
+          <span class="timing-tag timing-after">訓練後</span>
+        </div>
+        <p class="nc-desc">跑步的主要能量來源！訓練前充足的碳水儲備，讓你有足夠的肝醣跑完全程。</p>
+        <div class="nc-effect">
+          <strong>建議食物：</strong><br>
+          · 白飯、地瓜、麵包（訓練前）<br>
+          · 白吐司加果醬（賽前輕食）<br>
+          · 避免高脂、高纖食物（訓練前）
+        </div>
+      </div>
+    </div>
+
+    <!-- BCAA -->
+    <div class="nutrition-card" data-cat="during after daily">
+      <div class="nc-header">
+        <div class="nc-icon">💊</div>
+        <div>
+          <div class="nc-name">BCAA 支鏈胺基酸</div>
+          <div class="nc-cat">肌肉保護</div>
+        </div>
+      </div>
+      <div class="nc-body">
+        <div class="nc-timing">
+          <span class="timing-tag timing-during">訓練中</span>
+          <span class="timing-tag timing-after">訓練後</span>
+        </div>
+        <p class="nc-desc">保護肌肉免於在長跑中被分解，特別適合高訓練量的跑者使用。</p>
+        <div class="nc-effect">
+          <strong>主要功效：</strong><br>
+          · 減少長跑中肌肉分解<br>
+          · 加速訓練後肌肉修復<br>
+          · 降低訓練後肌肉痠痛
+        </div>
+      </div>
+    </div>
+
+    <!-- 維生素 C -->
+    <div class="nutrition-card" data-cat="daily">
+      <div class="nc-header">
+        <div class="nc-icon">🍊</div>
+        <div>
+          <div class="nc-name">維生素 C</div>
+          <div class="nc-cat">日常保養</div>
+        </div>
+      </div>
+      <div class="nc-body">
+        <div class="nc-timing">
+          <span class="timing-tag timing-after">日常補充</span>
+        </div>
+        <p class="nc-desc">抗氧化、強化免疫力。高強度訓練期間特別容易免疫下降，維生素 C 幫你保持健康。</p>
+        <div class="nc-effect">
+          <strong>主要功效：</strong><br>
+          · 抗氧化，減少自由基傷害<br>
+          · 強化免疫系統<br>
+          · 促進膠原蛋白合成（保護關節）
+        </div>
+      </div>
+    </div>
+
+    <!-- 薑黃 -->
+    <div class="nutrition-card" data-cat="daily after">
+      <div class="nc-header">
+        <div class="nc-icon">🌿</div>
+        <div>
+          <div class="nc-name">薑黃素</div>
+          <div class="nc-cat">消炎 / 恢復</div>
+        </div>
+      </div>
+      <div class="nc-body">
+        <div class="nc-timing">
+          <span class="timing-tag timing-after">訓練後</span>
+          <span class="timing-tag timing-during" style="background:rgba(107,107,107,0.1);color:#6b6b6b;border-color:rgba(107,107,107,0.3);">日常</span>
+        </div>
+        <p class="nc-desc">天然抗發炎成分，幫助減輕訓練後的肌肉發炎與痠痛，加速恢復。</p>
+        <div class="nc-effect">
+          <strong>主要功效：</strong><br>
+          · 抑制運動後發炎反應<br>
+          · 減輕肌肉痠痛（DOMS）<br>
+          · 搭配黑胡椒素吸收更佳
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 補給時機總覽表 -->
+  <div style="margin-top:60px;" class="reveal">
+    <div class="section-label" style="color:#8b6f20;">◆ 補給時機總覽</div>
+    <h2 class="section-title">什麼時候補什麼？</h2>
+    <table class="timing-table">
+      <thead>
+        <tr>
+          <th>時間點</th>
+          <th>建議補給</th>
+          <th>說明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>訓練前 2–3 小時</strong></td>
+          <td>碳水化合物正餐（飯、麵、地瓜）</td>
+          <td>儲備肝醣，提供跑步能量</td>
+        </tr>
+        <tr>
+          <td><strong>訓練前 45–60 分</strong></td>
+          <td>咖啡因 ± 少量碳水</td>
+          <td>提升專注力與表現</td>
+        </tr>
+        <tr>
+          <td><strong>訓練前 15–30 分</strong></td>
+          <td>能量膠 / 香蕉</td>
+          <td>快速補充即時能量</td>
+        </tr>
+        <tr>
+          <td><strong>訓練中（每 45 分）</strong></td>
+          <td>能量膠 + 電解質水</td>
+          <td>維持血糖，補充水分礦物質</td>
+        </tr>
+        <tr>
+          <td><strong>訓練後 30 分內 ⭐</strong></td>
+          <td>蛋白質 20–40g + 碳水化合物</td>
+          <td>黃金修復期，肌肉恢復最關鍵</td>
+        </tr>
+        <tr>
+          <td><strong>訓練後 1–2 小時</strong></td>
+          <td>均衡正餐</td>
+          <td>完整補充營養，促進全面恢復</td>
+        </tr>
+        <tr>
+          <td><strong>日常保養</strong></td>
+          <td>維生素 C、薑黃素、Omega-3</td>
+          <td>降低發炎、保護關節、強化免疫</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 注意事項 -->
+  <div style="margin-top:48px;padding:32px;background:rgba(184,92,56,0.06);border:1px solid rgba(184,92,56,0.2);" class="reveal">
+    <h3 style="font-family:'Noto Serif TC',serif;font-size:20px;margin-bottom:16px;color:#b85c38;">⚠️ 重要提醒</h3>
+    <ul style="list-style:none;">
+      <li style="font-size:14px;color:var(--muted);padding:8px 0;border-bottom:1px solid rgba(184,92,56,0.1);display:flex;gap:10px;line-height:1.7;"><span>·</span>補給品僅為輔助，均衡飲食才是基礎</li>
+      <li style="font-size:14px;color:var(--muted);padding:8px 0;border-bottom:1px solid rgba(184,92,56,0.1);display:flex;gap:10px;line-height:1.7;"><span>·</span>正式比賽使用的補給品，請先在訓練中測試，避免腸胃不適</li>
+      <li style="font-size:14px;color:var(--muted);padding:8px 0;border-bottom:1px solid rgba(184,92,56,0.1);display:flex;gap:10px;line-height:1.7;"><span>·</span>個人體質不同，建議諮詢營養師或教練後再使用</li>
+      <li style="font-size:14px;color:var(--muted);padding:8px 0;display:flex;gap:10px;line-height:1.7;"><span>·</span>水分補充最重要！任何訓練都要確保充足水分</li>
+    </ul>
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand" style="color:#c8a84b;">有意思跑步訓練班</div>
+    <div class="footer-links-group">
+      <a href="index.html">首頁</a>
+      <a href="coaches.html">師資介紹</a>
+      <a href="courses.html">課程</a>
+      <a href="calculator.html">跑步工具</a>
+      <a href="nutrition.html">補給指南</a>
+      <a href="contact.html">聯絡</a>
+    </div>
+    <div class="footer-copy">© 2025 有意思跑步訓練班. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+function filterCat(cat) {
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.nutrition-card').forEach(card => {
+    if (cat === 'all') {
+      card.style.display = '';
+    } else {
+      const cats = card.dataset.cat || '';
+      card.style.display = cats.includes(cat) ? '' : 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

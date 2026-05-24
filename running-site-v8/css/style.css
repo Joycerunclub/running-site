@@ -470,30 +470,3 @@ footer { background: #0c0c0c; padding: 32px 80px; border-top: 1px solid #1a1a1a;
 .hz-bpm span { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: var(--muted); }
 .hz-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
 .hz-pct { font-size: 13px; color: var(--muted); white-space: nowrap; }
-
-/* ── 手機版課程介紹優化 ── */
-@media (max-width: 900px) {
-  .course-hero-card {
-    grid-template-columns: 1fr !important;
-    margin-left: -24px !important;
-    margin-right: -24px !important;
-    border-left: none !important;
-    border-right: none !important;
-  }
-  .chc-img {
-    min-height: 280px !important;
-  }
-  .chc-body {
-    padding: 28px 24px !important;
-  }
-  .chc-title {
-    font-size: 24px !important;
-  }
-  section[style*="padding:60px 80px"] {
-    padding: 40px 24px !important;
-  }
-  .enquiry-grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-}
