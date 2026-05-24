@@ -130,6 +130,33 @@
       </div>
     </div>
   </div>
+
+  <!-- Heart Rate Zone Calculator -->
+  <div class="calc-card reveal">
+    <h2 class="calc-title">❤️ 心率五區計算機</h2>
+    <p class="calc-sub">使用 Karvonen 公式（最大心率 - 安靜心率）計算你的五個心率訓練區間</p>
+    <div class="calc-form">
+      <div class="form-row">
+        <label>最大心率 (HRmax)</label>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <input type="number" id="max-hr" placeholder="例：185" style="width:120px;padding:12px;border:1.5px solid var(--border);background:var(--off-white);border-radius:2px;font-size:16px;" />
+          <span style="font-size:13px;color:var(--muted)">bpm　　若不清楚可用 220 - 年齡 估算</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>安靜心率 (HRrest)</label>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <input type="number" id="rest-hr" placeholder="例：55" style="width:120px;padding:12px;border:1.5px solid var(--border);background:var(--off-white);border-radius:2px;font-size:16px;" />
+          <span style="font-size:13px;color:var(--muted)">bpm　　早上起床前靜躺量測最準確</span>
+        </div>
+      </div>
+      <button class="btn-primary calc-btn" onclick="calcHRZones()" style="background:#c8a84b;">計算心率區間</button>
+    </div>
+    <div id="hr-result-wrap" class="hidden" style="margin-top:32px;padding-top:32px;border-top:1px solid var(--border);">
+      <div id="hr-formula" style="font-size:13px;color:var(--muted);margin-bottom:20px;"></div>
+      <div id="hr-zone-result"></div>
+    </div>
+  </div>
 </section>
 
 <footer>
@@ -284,3 +311,42 @@ function calcTime() {
 </script>
 </body>
 </html>
+<script>
+// ── Heart Rate Zone Calculator (Karvonen) ──
+function calcHRZones() {
+  const maxHR = parseInt(document.getElementById('max-hr').value);
+  const restHR = parseInt(document.getElementById('rest-hr').value);
+  if (!maxHR || !restHR || maxHR <= restHR) {
+    alert('請確認最大心率大於安靜心率'); return;
+  }
+  const hrr = maxHR - restHR; // Heart Rate Reserve
+  const zones = [
+    { name: 'Zone 1', label: '恢復 / 輕鬆跑', pct: [0.50, 0.60], color: '#4CAF50', desc: '暖身、恢復跑，感覺非常輕鬆，可輕鬆說話' },
+    { name: 'Zone 2', label: '有氧基礎', pct: [0.60, 0.70], color: '#8BC34A', desc: '建立有氧基礎，可說話但需稍微喘氣' },
+    { name: 'Zone 3', label: '節奏跑', pct: [0.70, 0.80], color: '#FFC107', desc: '馬拉松配速區，說話困難但尚可' },
+    { name: 'Zone 4', label: '乳酸閾值', pct: [0.80, 0.90], color: '#FF9800', desc: '提升乳酸閾值，說話非常困難' },
+    { name: 'Zone 5', label: '最大攝氧量', pct: [0.90, 1.00], color: '#F44336', desc: '全力衝刺，無法說話，只能短時間維持' },
+  ];
+  let html = '';
+  zones.forEach(z => {
+    const low = Math.round(z.pct[0] * hrr + restHR);
+    const high = Math.round(z.pct[1] * hrr + restHR);
+    const pctLow = Math.round(z.pct[0] * 100);
+    const pctHigh = Math.round(z.pct[1] * 100);
+    html += `
+      <div class="hr-zone-item">
+        <div class="hz-color" style="background:${z.color}"></div>
+        <div class="hz-main">
+          <div class="hz-name">${z.name} <span class="hz-label">${z.label}</span></div>
+          <div class="hz-bpm">${low} – ${high} <span>bpm</span></div>
+          <div class="hz-desc">${z.desc}</div>
+        </div>
+        <div class="hz-pct">${pctLow}–${pctHigh}%</div>
+      </div>`;
+  });
+  document.getElementById('hr-zone-result').innerHTML = html;
+  document.getElementById('hr-result-wrap').classList.remove('hidden');
+  document.getElementById('hr-formula').textContent =
+    `HRR = ${maxHR} - ${restHR} = ${hrr} bpm`;
+}
+</script>

@@ -3,66 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>教練介紹 - 有意思跑步訓練班</title>
+<title>師資介紹 - 有意思跑步訓練班</title>
 <link rel="stylesheet" href="css/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-.coach-section { padding: 60px 80px; }
-.coach-card {
-  display: grid; grid-template-columns: 320px 1fr;
-  gap: 60px; align-items: start;
-  padding: 60px 0; border-bottom: 1px solid var(--border);
+.team-section { padding: 60px 80px; }
+.team-divider {
+  display: flex; align-items: center; gap: 20px;
+  margin: 60px 0 40px;
 }
-.coach-card:last-child { border-bottom: none; }
-.coach-card.reverse { direction: rtl; }
-.coach-card.reverse > * { direction: ltr; }
-.coach-photo {
-  width: 100%; aspect-ratio: 3/4;
+.team-divider h2 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 28px; font-weight: 900; white-space: nowrap;
+  color: var(--black);
+}
+.team-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+.team-divider .divider-tag {
+  font-size: 11px; letter-spacing: 0.2em;
+  color: #8b6f20; background: rgba(200,168,75,0.1);
+  padding: 4px 14px; border: 1px solid rgba(200,168,75,0.3);
+  white-space: nowrap;
+}
+.coach-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
+.coach-card-v {
+  border: 1px solid var(--border); background: #fff;
+  overflow: hidden; transition: transform .3s, box-shadow .3s;
+}
+.coach-card-v:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+.coach-photo-v {
+  width: 100%; aspect-ratio: 3/4; object-fit: cover;
   background: var(--cream);
   display: flex; align-items: center; justify-content: center;
-  overflow: hidden; border: 1px solid var(--border);
-  font-size: 80px;
+  font-size: 80px; overflow: hidden;
 }
-.coach-role {
-  font-size: 11px; letter-spacing: 0.25em;
-  color: #8b6f20; text-transform: uppercase;
-  border-left: 3px solid #c8a84b; padding-left: 12px;
-  margin-bottom: 12px;
+.coach-photo-v img { width: 100%; height: 100%; object-fit: cover; }
+.coach-info { padding: 24px; }
+.coach-role-tag {
+  font-size: 10px; letter-spacing: 0.2em; color: #8b6f20;
+  text-transform: uppercase; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 6px;
 }
-.coach-name { font-family: 'Noto Serif TC', serif; font-size: 32px; font-weight: 900; margin-bottom: 8px; }
-.coach-spec { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
-.coach-record {
-  display: flex; gap: 20px; flex-wrap: wrap;
-  margin-bottom: 28px; padding: 20px;
-  background: rgba(200,168,75,0.08); border-left: 3px solid #c8a84b;
+.coach-role-tag::before { content: '◆'; font-size: 8px; }
+.coach-card-name { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 900; margin-bottom: 6px; }
+.coach-card-spec { font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+.coach-records { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.coach-record-badge {
+  font-size: 11px; padding: 4px 10px;
+  background: rgba(200,168,75,0.1); color: #8b6f20;
+  border: 1px solid rgba(200,168,75,0.25);
 }
-.record-item { text-align: center; }
-.record-num { font-family: 'DM Serif Display', serif; font-size: 22px; color: #8b6f20; }
-.record-label { font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
-.coach-section-title {
-  font-size: 13px; font-weight: 700; letter-spacing: 0.1em;
-  color: var(--text); margin: 20px 0 10px;
-  display: flex; align-items: center; gap: 8px;
+.coach-exp-list { list-style: none; border-top: 1px solid var(--border); padding-top: 14px; }
+.coach-exp-list li {
+  font-size: 12px; color: var(--muted); padding: 4px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  display: flex; gap: 6px;
 }
-.coach-section-title::before { content: '▶'; color: #c8a84b; font-size: 10px; }
-.coach-list { list-style: none; }
-.coach-list li {
-  font-size: 13px; color: var(--muted); padding: 5px 0;
+.coach-exp-list li::before { content: '·'; color: #c8a84b; font-weight: 900; flex-shrink: 0; }
+
+/* Full-width coach card for head coach */
+.coach-card-h {
+  display: grid; grid-template-columns: 340px 1fr;
+  gap: 0; border: 1px solid var(--border); background: #fff;
+  overflow: hidden; margin-bottom: 40px;
+}
+.coach-photo-h {
+  width: 100%; height: 100%; min-height: 400px;
+  object-fit: cover; background: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 80px; overflow: hidden;
+}
+.coach-photo-h img { width: 100%; height: 100%; object-fit: cover; }
+.coach-info-h { padding: 40px; }
+.coach-record-row {
+  display: flex; gap: 24px; flex-wrap: wrap;
+  padding: 20px; background: rgba(200,168,75,0.06);
+  border-left: 3px solid #c8a84b; margin: 20px 0;
+}
+.crr-item { }
+.crr-num { font-family: 'DM Serif Display', serif; font-size: 24px; color: #8b6f20; line-height: 1; }
+.crr-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.exp-section-title {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+  color: var(--text); margin: 18px 0 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.exp-section-title::before { content: '▶'; color: #c8a84b; font-size: 9px; }
+.exp-list { list-style: none; }
+.exp-list li {
+  font-size: 12px; color: var(--muted); padding: 4px 0;
   border-bottom: 1px solid var(--border);
   display: flex; gap: 8px; line-height: 1.5;
 }
-.coach-list li::before { content: '·'; color: #c8a84b; font-weight: 700; flex-shrink: 0; }
-.badge-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-.badge {
-  font-size: 11px; padding: 4px 12px;
-  background: rgba(200,168,75,0.12); color: #8b6f20;
-  border: 1px solid rgba(200,168,75,0.3); border-radius: 1px;
+.exp-list li::before { content: '·'; color: #c8a84b; flex-shrink: 0; }
+.badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.badge-sm {
+  font-size: 10px; padding: 3px 10px;
+  background: rgba(200,168,75,0.1); color: #8b6f20;
+  border: 1px solid rgba(200,168,75,0.25);
 }
-@media (max-width: 900px) {
-  .coach-section { padding: 40px 24px; }
-  .coach-card { grid-template-columns: 1fr; gap: 32px; }
-  .coach-card.reverse { direction: ltr; }
-  .coach-photo { aspect-ratio: 1; max-height: 300px; }
+
+/* Support staff small cards */
+.support-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+.support-card {
+  border: 1px solid var(--border); background: #fff;
+  overflow: hidden; text-align: center;
+}
+.support-photo {
+  width: 100%; aspect-ratio: 1; object-fit: cover;
+  background: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px; overflow: hidden;
+}
+.support-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.support-info { padding: 16px; }
+.support-role { font-size: 10px; letter-spacing: 0.15em; color: #8b6f20; margin-bottom: 4px; }
+.support-name { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.support-spec { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+@media (max-width: 1024px) {
+  .team-section { padding: 40px 24px; }
+  .coach-grid { grid-template-columns: 1fr; }
+  .coach-card-h { grid-template-columns: 1fr; }
+  .coach-photo-h { min-height: 300px; }
+  .support-grid { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
@@ -73,7 +138,7 @@
   <button class="hamburger" id="hamburger">&#9776;</button>
   <ul class="nav-links" id="nav-links">
     <li><a href="index.html">首頁</a></li>
-    <li><a href="coaches.html">教練介紹</a></li>
+    <li><a href="coaches.html">師資介紹</a></li>
     <li><a href="courses.html">課程方案</a></li>
     <li><a href="calculator.html">配速計算</a></li>
     <li><a href="contact.html">聯絡我們</a></li>
@@ -83,201 +148,159 @@
 
 <div class="page-header" style="background:#1a1410;">
   <div class="section-label light">◆ 師資介紹</div>
-  <h1 class="page-title">專業教練團隊</h1>
-  <p class="page-sub">每一位教練都用熱情與專業，陪伴你成為快樂的跑者</p>
+  <h1 class="page-title">專業師資陣容</h1>
+  <p class="page-sub">每一位教練都用熱情與專業，陪伴你成為快樂的跑者 🧡</p>
 </div>
 
-<section class="coach-section">
+<section class="team-section">
 
-  <!-- 吳語喬 -->
-  <div class="coach-card reveal">
-    <div>
-      <div class="coach-photo">🏃‍♀️</div>
+  <!-- ── 教練 ── -->
+  <div class="team-divider">
+    <h2>教練團隊</h2>
+    <span class="divider-tag">COACHES</span>
+  </div>
+
+  <!-- 吳語喬 總教練 full width -->
+  <div class="coach-card-h reveal">
+    <div class="coach-photo-h">
+      <img src="images/coach-yuqiao.jpg" alt="吳語喬教練" onerror="this.parentElement.innerHTML='🏃‍♀️'">
     </div>
-    <div>
-      <div class="coach-role">◆ 總教練</div>
-      <div class="coach-name">吳語喬</div>
-      <div class="coach-spec">臺北市立大學 陸上運動學系<br>教學專長：跑步訓練 ｜ 週期化賽事訓練 ｜ 肌力訓練 ｜ 幼兒體適能</div>
-      <div class="coach-record">
-        <div class="record-item">
-          <div class="record-num">3:10:25</div>
-          <div class="record-label">全馬最佳</div>
-        </div>
-        <div class="record-item">
-          <div class="record-num">1:28:44</div>
-          <div class="record-label">半馬最佳</div>
-        </div>
-        <div class="record-item">
-          <div class="record-num">女子歷代100傑</div>
-          <div class="record-label">半馬成就</div>
-        </div>
+    <div class="coach-info-h">
+      <div class="coach-role-tag">◆ 總教練</div>
+      <div class="coach-card-name" style="font-size:30px;">吳語喬</div>
+      <div class="coach-card-spec">臺北市立大學 陸上運動學系<br>教學專長：跑步訓練 ｜ 週期化賽事訓練 ｜ 肌力訓練 ｜ 幼兒體適能</div>
+      <div class="coach-record-row">
+        <div class="crr-item"><div class="crr-num">3:10:25</div><div class="crr-label">全馬最佳</div></div>
+        <div class="crr-item"><div class="crr-num">1:28:44</div><div class="crr-label">半馬最佳</div></div>
+        <div class="crr-item"><div class="crr-num">女子歷代100傑</div><div class="crr-label">半馬殊榮</div></div>
       </div>
-      <div class="coach-section-title">教學經歷</div>
-      <ul class="coach-list">
+      <div class="exp-section-title">教學經歷</div>
+      <ul class="exp-list">
         <li>有意思跑步訓練營 總教練</li>
-        <li>DHRC 初階班教練</li>
-        <li>森林跑站初心班教練</li>
-        <li>宜蘭 / 台北 / 新北市運動樂區初階教練</li>
+        <li>DHRC初階班 / 森林跑站初心班 教練</li>
+        <li>宜蘭 / 台北 / 新北市運動樂區 初階教練</li>
         <li>Nisoro x Hood To Coast 女子訓練營教練</li>
-        <li>好時光女生運動樂園跑步初中階教練</li>
         <li>萬國律師事務所 / 創維有限公司 企業跑班教練</li>
       </ul>
-      <div class="coach-section-title">特殊經歷</div>
-      <div class="badge-grid">
-        <span class="badge">Nike Pacer</span>
-        <span class="badge">2018 泰北志工體育教學</span>
-        <span class="badge">木曜4超玩 合作配速員</span>
-        <span class="badge">寶礦力 / 運動筆記 合作</span>
-        <span class="badge">一次搞定 緯來綜合台 VCR</span>
-        <span class="badge">南山人壽 / EMBA 合作</span>
+      <div class="exp-section-title">特殊經歷</div>
+      <div class="badge-row">
+        <span class="badge-sm">Nike Pacer</span>
+        <span class="badge-sm">木曜4超玩 配速員</span>
+        <span class="badge-sm">寶礦力/運動筆記 合作</span>
+        <span class="badge-sm">緯來綜合台 外景VCR</span>
+        <span class="badge-sm">南山人壽 / EMBA 合作</span>
       </div>
     </div>
   </div>
 
-  <!-- 薇安 -->
-  <div class="coach-card reverse reveal">
-    <div>
-      <div class="coach-photo">🥇</div>
-    </div>
-    <div>
-      <div class="coach-role">◆ 跑步教練</div>
-      <div class="coach-name">薇安</div>
-      <div class="coach-spec">教學專長：體適能訓練 ｜ 樂齡訓練 ｜ 核心訓練</div>
-      <div class="coach-record">
-        <div class="record-item">
-          <div class="record-num">總冠軍</div>
-          <div class="record-label">2024 馬祖北竿 12.5K</div>
-        </div>
-        <div class="record-item">
-          <div class="record-num">總冠軍</div>
-          <div class="record-label">2023 冬山河超馬 21K</div>
-        </div>
+  <!-- 薇安 & 阿良 -->
+  <div class="coach-grid reveal">
+    <!-- 薇安 -->
+    <div class="coach-card-v">
+      <div class="coach-photo-v">
+        <img src="images/coach-weian.jpg" alt="薇安教練" onerror="this.parentElement.innerHTML='🥇'">
       </div>
-      <div class="coach-section-title">得獎經歷</div>
-      <ul class="coach-list">
-        <li>2024 馬祖北竿硬地馬拉松 12.5K 總冠軍</li>
-        <li>2023 冬山河超級馬拉松 21K 總冠軍</li>
-        <li>2024 員山頑埤路跑 10K 總2</li>
-        <li>2023 北港媽祖馬拉松 10K 總3</li>
-      </ul>
-      <div class="coach-section-title">教學經歷</div>
-      <ul class="coach-list">
-        <li>樂齡有氧 3年 ｜ 跑步肌力 2年 ｜ 兒童體能 1年</li>
-        <li>建安國小小鐵人俱樂部教練</li>
-        <li>再興中學高爾夫校隊體能教練</li>
-        <li>萬國律師事務所 / 創惟科技 跑步社團教練</li>
-        <li>教育部體育署跑步教練</li>
-        <li>中和/板橋/大安/信義區社區運動教練</li>
-      </ul>
-      <div class="coach-section-title">證照</div>
-      <div class="badge-grid">
-        <span class="badge">樂齡運動指導員</span>
-        <span class="badge">跑步專業</span>
-        <span class="badge">急救防護</span>
-        <span class="badge">初級救護技術員 EMT1</span>
-        <span class="badge">工具式筋膜鬆動術</span>
-        <span class="badge">C級田徑教練</span>
-        <span class="badge">C級田徑裁判</span>
+      <div class="coach-info">
+        <div class="coach-role-tag">跑步教練</div>
+        <div class="coach-card-name">薇安</div>
+        <div class="coach-card-spec">教學專長：體適能訓練 ｜ 樂齡訓練 ｜ 核心訓練</div>
+        <div class="coach-records">
+          <span class="coach-record-badge">2024 馬祖北竿 12.5K 總冠軍</span>
+          <span class="coach-record-badge">2023 冬山河超馬 21K 總冠軍</span>
+          <span class="coach-record-badge">2024 員山頑埤 10K 總2</span>
+          <span class="coach-record-badge">2023 北港媽祖馬 10K 總3</span>
+        </div>
+        <ul class="coach-exp-list">
+          <li>樂齡有氧 3年 ｜ 跑步肌力 2年 ｜ 兒童體能 1年</li>
+          <li>萬國律師事務所 / 創惟科技 跑步社團教練</li>
+          <li>教育部體育署跑步教練</li>
+          <li>C級田徑教練 / 裁判</li>
+          <li>初級救護技術員 EMT1</li>
+        </ul>
       </div>
     </div>
-  </div>
-
-  <!-- 張冠良 Max -->
-  <div class="coach-card reveal">
-    <div>
-      <div class="coach-photo">💪</div>
-    </div>
-    <div>
-      <div class="coach-role">◆ 肌力教練</div>
-      <div class="coach-name">張冠良 Max</div>
-      <div class="coach-spec">教學專長：肌力訓練 ｜ 核心訓練</div>
-      <div class="coach-section-title">教學經歷</div>
-      <ul class="coach-list">
-        <li>2015 SunFish健身房教練</li>
-        <li>2016 中華民國水上救生協會 游泳教練 & 救生員</li>
-        <li>2018 台北市泉源國小 肌力與體能訓練計畫</li>
-        <li>2019 Eagersport 伊格運動 體能教練</li>
-        <li>2019 Workin Lab 強大肌力訓練中心 體能教練</li>
-        <li>2019–2020 Merrell 日月潭環湖路跑賽 大會教練</li>
-        <li>2021 Hermes Fit 大會健身教練</li>
-      </ul>
-      <div class="coach-section-title">專業證照</div>
-      <div class="badge-grid">
-        <span class="badge">NSCA 奧林匹克舉重</span>
-        <span class="badge">GRAY Institute 3D Maps</span>
-        <span class="badge">台灣動作專家協會 TMSA BAK</span>
-        <span class="badge">肌力與體能教練丙級</span>
-        <span class="badge">中華民國籃球 C級教練</span>
-        <span class="badge">PADI 初階潛水員</span>
-        <span class="badge">AIDA2 X WAVE1</span>
+    <!-- 張冠良 Max -->
+    <div class="coach-card-v">
+      <div class="coach-photo-v">
+        <img src="images/coach-max.jpg" alt="張冠良Max教練" onerror="this.parentElement.innerHTML='💪'">
+      </div>
+      <div class="coach-info">
+        <div class="coach-role-tag">肌力教練</div>
+        <div class="coach-card-name">張冠良 Max</div>
+        <div class="coach-card-spec">教學專長：肌力訓練 ｜ 核心訓練</div>
+        <div class="coach-records">
+          <span class="coach-record-badge">NSCA 奧林匹克舉重認證</span>
+          <span class="coach-record-badge">GRAY Institute 3D Maps</span>
+          <span class="coach-record-badge">台灣動作專家協會 TMSA</span>
+        </div>
+        <ul class="coach-exp-list">
+          <li>2015 SunFish健身房教練</li>
+          <li>2019 Eagersport 伊格運動 體能教練</li>
+          <li>2019 Workin Lab 強大肌力訓練中心</li>
+          <li>2019-2020 Merrell 日月潭環湖路跑 大會教練</li>
+          <li>2021 Hermes Fit 大會健身教練</li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <!-- 陳韋璇 -->
-  <div class="coach-card reverse reveal">
-    <div>
-      <div class="coach-photo">🛡️</div>
-    </div>
-    <div>
-      <div class="coach-role">◆ 運動防護員</div>
-      <div class="coach-name">陳韋璇</div>
-      <div class="coach-spec">台北市立大學 運動科學所 實驗助理</div>
-      <div class="coach-section-title">專長研習</div>
-      <ul class="coach-list">
-        <li>協助人體實驗、數據分析等</li>
-        <li>台北榮民總醫院內臟部腎臟科 實驗助理</li>
-        <li>台北市立大學 運動防護隊</li>
-        <li>2023 美國斯波坎世界青少年羽球錦標賽 中華台北隨隊防護員</li>
-        <li>台北市立新興國中 / 基層訓練站防護員</li>
-        <li>台北市立大學女子手球校隊 隨隊防護員</li>
-      </ul>
-      <div class="coach-section-title">賽事防護經歷</div>
-      <ul class="coach-list">
-        <li>111–113年 全國手球錦標賽</li>
-        <li>111–113年 手球大專盃</li>
-        <li>北市大運動防護室實習 2022/03–迄今</li>
-        <li>近四十場大小賽事 隨隊大會防護員</li>
-      </ul>
-    </div>
+  <!-- ── 助教 ── -->
+  <div class="team-divider" style="margin-top:80px;">
+    <h2>助教團隊</h2>
+    <span class="divider-tag">ASSISTANT COACHES</span>
   </div>
 
-  <!-- 小錢 -->
-  <div class="coach-card reveal">
-    <div>
-      <div class="coach-photo">🌟</div>
-    </div>
-    <div>
-      <div class="coach-role">◆ 助教</div>
-      <div class="coach-name">錢思好（小錢）</div>
-      <div class="coach-spec">國立體育大學 陸上運動競技學系 在校生<br>教學專長：跑步訓練</div>
-      <div class="coach-record">
-        <div class="record-item">
-          <div class="record-num">02:26.52</div>
-          <div class="record-label">800公尺</div>
-        </div>
-        <div class="record-item">
-          <div class="record-num">05:00.81</div>
-          <div class="record-label">1500公尺</div>
-        </div>
-        <div class="record-item">
-          <div class="record-num">19:47.63</div>
-          <div class="record-label">5000公尺</div>
+  <div class="support-grid reveal">
+    <!-- 小錢 -->
+    <div class="support-card">
+      <div class="support-photo">
+        <img src="images/trainer-xiaoqian.jpg" alt="錢思予" onerror="this.parentElement.innerHTML='🌟'">
+      </div>
+      <div class="support-info">
+        <div class="support-role">◆ 助教</div>
+        <div class="support-name">錢思予</div>
+        <div class="support-spec">
+          國立體育大學 陸上運動競技學系<br>
+          800m 02:26 ｜ 1500m 05:00 ｜ 5000m 19:47<br>
+          2023台北馬 半馬配速員
         </div>
       </div>
-      <div class="coach-section-title">得獎經歷</div>
-      <ul class="coach-list">
-        <li>112年新北市中等學校運動會 1500公尺 第二名</li>
-        <li>112年新北市中等學校運動會 5000公尺 第三名</li>
-        <li>113年全國大專院校運動會 800公尺 第六名</li>
-        <li>113年全國大專院校田徑公開賽 800公尺 第五名</li>
-        <li>113年渣打公益馬拉松 13.5K 女總六</li>
-        <li>113年台灣港務盃花蓮鯉魚潭環潭路跑賽 5K 女總五</li>
-      </ul>
-      <div class="coach-section-title">特殊經歷</div>
-      <div class="badge-grid">
-        <span class="badge">2023台北馬拉松 半馬配速員</span>
-        <span class="badge">有意思跑步訓練營 助教</span>
+    </div>
+    <!-- 浩全 -->
+    <div class="support-card">
+      <div class="support-photo">
+        <img src="images/trainer-haoquan.jpg" alt="浩全" onerror="this.parentElement.innerHTML='🏃‍♂️'">
+      </div>
+      <div class="support-info">
+        <div class="support-role">◆ 助教</div>
+        <div class="support-name">浩全</div>
+        <div class="support-spec">介紹即將更新 🧡</div>
+      </div>
+    </div>
+    <!-- 紫琳 -->
+    <div class="support-card">
+      <div class="support-photo">
+        <img src="images/trainer-zilin.jpg" alt="紫琳" onerror="this.parentElement.innerHTML='🏃‍♀️'">
+      </div>
+      <div class="support-info">
+        <div class="support-role">◆ 助教</div>
+        <div class="support-name">紫琳</div>
+        <div class="support-spec">介紹即將更新 🧡</div>
+      </div>
+    </div>
+    <!-- 陳韋璇 -->
+    <div class="support-card">
+      <div class="support-photo">
+        <img src="images/trainer-weixuan.jpg" alt="陳韋璇" onerror="this.parentElement.innerHTML='🛡️'">
+      </div>
+      <div class="support-info">
+        <div class="support-role">◆ 運動防護員</div>
+        <div class="support-name">陳韋璇</div>
+        <div class="support-spec">
+          台北市立大學 運動科學所<br>
+          2023世界青少年羽球錦標賽 隨隊防護<br>
+          近40場賽事 大會防護員
+        </div>
       </div>
     </div>
   </div>
@@ -289,7 +312,7 @@
     <div class="footer-brand" style="color:#c8a84b;">有意思跑步訓練班</div>
     <div class="footer-links-group">
       <a href="index.html">首頁</a>
-      <a href="coaches.html">教練介紹</a>
+      <a href="coaches.html">師資介紹</a>
       <a href="courses.html">課程</a>
       <a href="calculator.html">配速計算</a>
       <a href="contact.html">聯絡</a>

@@ -455,3 +455,18 @@ footer { background: #0c0c0c; padding: 32px 80px; border-top: 1px solid #1a1a1a;
   .philo-grid { grid-template-columns: 1fr; }
   .hero-stats { flex-wrap: wrap; gap: 24px; }
 }
+
+/* ── Heart Rate Zones ── */
+.hr-zone-item {
+  display: grid; grid-template-columns: 6px 1fr auto;
+  gap: 16px; align-items: center;
+  padding: 16px; background: var(--off-white);
+  margin-bottom: 4px;
+}
+.hz-color { width: 6px; height: 100%; min-height: 60px; border-radius: 3px; }
+.hz-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.hz-label { font-weight: 400; color: var(--muted); }
+.hz-bpm { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--black); }
+.hz-bpm span { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: var(--muted); }
+.hz-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.hz-pct { font-size: 13px; color: var(--muted); white-space: nowrap; }
