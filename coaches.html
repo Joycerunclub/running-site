@@ -12,10 +12,12 @@
 .team-divider h2{font-family:'Noto Serif TC',serif;font-size:26px;font-weight:900;white-space:nowrap;}
 .team-divider::after{content:'';flex:1;height:1px;background:var(--border);}
 .divider-tag{font-size:11px;letter-spacing:0.2em;color:#8b6f20;background:rgba(200,168,75,0.1);padding:4px 14px;border:1px solid rgba(200,168,75,0.3);white-space:nowrap;}
+
+/* 總教練大卡 */
 .coach-card-h{display:grid;grid-template-columns:300px 1fr;border:1px solid var(--border);overflow:hidden;margin-bottom:40px;background:#fff;}
-.coach-photo-h{width:100%;min-height:400px;overflow:hidden;background:linear-gradient(180deg,#c8a84b,#8b6f20);display:flex;align-items:center;justify-content:center;font-size:80px;}
+.coach-photo-h{width:100%;min-height:420px;overflow:hidden;background:linear-gradient(180deg,#c8a84b,#8b6f20);display:flex;align-items:center;justify-content:center;font-size:80px;}
 .coach-photo-h img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;}
-.coach-info-h{padding:36px;}
+.coach-info-h{padding:36px;overflow-y:auto;}
 .role-tag{font-size:10px;letter-spacing:0.2em;color:#8b6f20;text-transform:uppercase;margin-bottom:8px;}
 .cname{font-family:'Noto Serif TC',serif;font-size:26px;font-weight:900;margin-bottom:6px;}
 .cspec{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:14px;}
@@ -29,6 +31,8 @@
 .elist li::before{content:'·';color:#c8a84b;flex-shrink:0;}
 .badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
 .badge{font-size:10px;padding:3px 10px;background:rgba(200,168,75,0.1);color:#8b6f20;border:1px solid rgba(200,168,75,0.25);}
+
+/* 教練網格 */
 .coach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
 .ccard{border:1px solid var(--border);background:#fff;overflow:hidden;transition:transform .3s,box-shadow .3s;}
 .ccard:hover{transform:translateY(-5px);box-shadow:0 16px 32px rgba(0,0,0,0.08);}
@@ -40,6 +44,8 @@
 .clist{list-style:none;border-top:1px solid var(--border);padding-top:10px;}
 .clist li{font-size:12px;color:var(--muted);padding:4px 0;border-bottom:1px solid rgba(0,0,0,0.04);display:flex;gap:6px;line-height:1.5;}
 .clist li::before{content:'·';color:#c8a84b;flex-shrink:0;}
+
+/* 助教卡片 */
 .asgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
 .ascard{border:1px solid var(--border);background:#fff;overflow:hidden;}
 .asphoto{width:100%;aspect-ratio:1;overflow:hidden;background:linear-gradient(135deg,#e8c96b,#c8a84b);display:flex;align-items:center;justify-content:center;font-size:48px;}
@@ -47,8 +53,9 @@
 .asbody{padding:16px;}
 .asrole{font-size:10px;letter-spacing:0.15em;color:#8b6f20;margin-bottom:4px;}
 .asname{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;margin-bottom:8px;}
-.asspec{font-size:12px;color:var(--muted);line-height:1.7;}
 .asrecord{font-size:11px;padding:8px 12px;background:rgba(200,168,75,0.08);border-left:2px solid #c8a84b;margin:8px 0;line-height:1.8;}
+.asspec{font-size:12px;color:var(--muted);line-height:1.7;}
+
 @media(max-width:900px){
   .team-section{padding:40px 24px;}
   .coach-grid,.asgrid{grid-template-columns:1fr;}
@@ -97,30 +104,44 @@
       <div class="record-bar">
         <div><div class="rb-num">3:10:25</div><div class="rb-label">全馬最佳</div></div>
         <div><div class="rb-num">1:28:44</div><div class="rb-label">半馬最佳</div></div>
-        <div><div class="rb-num">女子歷代100傑</div><div class="rb-label">半馬殊榮</div></div>
       </div>
       <div class="etitle">教學經歷</div>
       <ul class="elist">
         <li>有意思跑步訓練營 總教練</li>
-        <li>DHRC初階班 / 森林跑站初心班教練</li>
+        <li>DHRC初階班教練 ｜ 森林跑站初心班教練</li>
         <li>宜蘭 / 台北 / 新北市運動樂區初階教練</li>
         <li>Nisoro x Hood To Coast 女子訓練營教練</li>
-        <li>萬國律師事務所 / 創維有限公司 企業跑班教練</li>
         <li>好時光女生運動樂園 跑步初中階教練</li>
+        <li>萬國律師事務所 / 創維有限公司 企業跑班教練</li>
+        <li>富邦銀行活動 一日有氧舞助教</li>
+        <li>中國信託跑步訓練營助教 ｜ 活動咖名古屋訓練營助教</li>
       </ul>
       <div class="etitle">特殊經歷</div>
+      <ul class="elist">
+        <li>New Balance 教練</li>
+        <li>2018年海外志工 泰北大同中學協助體育教學</li>
+        <li>2020年內地滑步車教習會 幼兒體適能教學</li>
+        <li>木曜4超玩 一日半馬 合作配速員</li>
+        <li>寶礦力水得 / 運動筆記 影片拍攝合作</li>
+        <li>一次搞定 緯來綜合台 外景VCR跑步教學合作</li>
+        <li>南山人壽 / EMBA 北區 單次課程合作</li>
+      </ul>
+      <div class="etitle">證照</div>
       <div class="badges">
-        <span class="badge">New Balance 教練</span>
-        <span class="badge">木曜4超玩 配速員</span>
-        <span class="badge">寶礦力/運動筆記 合作</span>
-        <span class="badge">緯來綜合台 外景VCR</span>
-        <span class="badge">南山人壽 / EMBA 合作</span>
+        <span class="badge">田徑C級裁判</span>
+        <span class="badge">田徑C級教練</span>
+        <span class="badge">親子幼兒體適能指導員</span>
+        <span class="badge">CPR 心肺復甦術</span>
+        <span class="badge">C級貼紮研習</span>
+        <span class="badge">BLACKROLL 滾筒</span>
       </div>
     </div>
   </div>
 
   <!-- 薇安 + Max + 陳韋璇 -->
   <div class="coach-grid reveal">
+
+    <!-- 薇安 -->
     <div class="ccard">
       <div class="cphoto"><img src="images/coach-weian.jpg" alt="薇安" onerror="this.parentElement.innerHTML='🥇'"></div>
       <div class="cbody">
@@ -131,15 +152,30 @@
           <span class="cbadge">2024 馬祖北竿 12.5K 總冠軍</span>
           <span class="cbadge">2023 冬山河超馬 21K 總冠軍</span>
           <span class="cbadge">2024 員山頑埤 10K 總2</span>
+          <span class="cbadge">2023 北港媽祖馬 10K 總3</span>
         </div>
         <ul class="clist">
           <li>樂齡有氧 3年 ｜ 跑步肌力 2年 ｜ 兒童體能 1年</li>
-          <li>萬國律師事務所 / 創惟科技 跑步教練</li>
+          <li>建安國小小鐵人俱樂部教練</li>
+          <li>再興中學高爾夫校隊體能教練</li>
+          <li>萬國律師事務所 / 創惟科技 跑步社團教練</li>
           <li>教育部體育署跑步教練</li>
-          <li>C級田徑教練 / 裁判 ｜ EMT1</li>
+          <li>中和/板橋/大安/信義區 社區運動教練</li>
         </ul>
+        <div class="etitle" style="margin-top:12px;">證照</div>
+        <div class="cbadges">
+          <span class="cbadge">樂齡運動指導員</span>
+          <span class="cbadge">跑步專業</span>
+          <span class="cbadge">EMT1</span>
+          <span class="cbadge">工具式筋膜鬆動術</span>
+          <span class="cbadge">C級田徑教練</span>
+          <span class="cbadge">C級田徑裁判</span>
+          <span class="cbadge">衛福部失能照護指導員</span>
+        </div>
       </div>
     </div>
+
+    <!-- 張冠良 Max -->
     <div class="ccard">
       <div class="cphoto"><img src="images/coach-max.jpg" alt="張冠良Max" onerror="this.parentElement.innerHTML='💪'"></div>
       <div class="cbody">
@@ -147,19 +183,27 @@
         <div class="cname">張冠良 Max</div>
         <div class="cspec">肌力訓練 ｜ 核心訓練</div>
         <div class="cbadges">
-          <span class="cbadge">NSCA 奧林匹克舉重認證</span>
+          <span class="cbadge">NSCA 奧林匹克舉重</span>
           <span class="cbadge">GRAY Institute 3D Maps</span>
-          <span class="cbadge">TMSA BAK</span>
+          <span class="cbadge">台灣動作專家協會 TMSA BAK</span>
+          <span class="cbadge">肌力體能教練丙級</span>
+          <span class="cbadge">C級籃球教練</span>
+          <span class="cbadge">PADI 初階潛水員</span>
         </div>
         <ul class="clist">
-          <li>Eagersport 伊格運動 體能教練</li>
-          <li>Workin Lab 強大肌力訓練中心</li>
-          <li>Merrell 日月潭環湖路跑 大會教練</li>
-          <li>Hermes Fit 大會健身教練</li>
+          <li>2015 SunFish健身房教練</li>
+          <li>2016 水上救生協會游泳教練&救生員</li>
+          <li>2018 台北市泉源國小 肌力與體能訓練計畫</li>
+          <li>2019 Eagersport 伊格運動 體能教練</li>
+          <li>2019 Workin Lab 強大肌力訓練中心</li>
+          <li>2019–2020 Merrell 日月潭環湖路跑 大會教練</li>
+          <li>2021 Hermes Fit 大會健身教練</li>
+          <li>2021 烏烏醫師 孕力研究所</li>
         </ul>
       </div>
     </div>
-    <!-- 陳韋璇 防護員 - 在教練區 -->
+
+    <!-- 陳韋璇 防護員 -->
     <div class="ccard">
       <div class="cphoto"><img src="images/trainer-weixuan.jpg" alt="陳韋璇" onerror="this.parentElement.innerHTML='🛡️'"></div>
       <div class="cbody">
@@ -171,13 +215,17 @@
           <span class="cbadge">近40場賽事 大會防護員</span>
         </div>
         <ul class="clist">
+          <li>台北榮民總醫院 腎臟科實驗助理</li>
           <li>台北市立大學 運動防護隊</li>
           <li>台北市立新興國中 基層訓練站防護員</li>
           <li>北市大女子手球校隊 隨隊防護員</li>
-          <li>111–113年 全國手球錦標賽</li>
+          <li>111–113年 全國手球錦標賽 防護</li>
+          <li>2023冬季/暑期 公益環島營隊</li>
+          <li>愛爾蘭到府運動按摩 ｜ 恆春捐獻制運動按摩</li>
         </ul>
       </div>
     </div>
+
   </div>
 
   <!-- ══ 助教 ══ -->
@@ -187,25 +235,55 @@
   </div>
 
   <div class="asgrid reveal">
-    <!-- 錢思予 -->
+
+    <!-- 錢思妤 -->
     <div class="ascard">
-      <div class="asphoto"><img src="images/trainer-xiaoqian.jpg" alt="錢思予" onerror="this.parentElement.innerHTML='🌟'"></div>
+      <div class="asphoto"><img src="images/trainer-xiaoqian.jpg" alt="錢思妤" onerror="this.parentElement.innerHTML='🌟'"></div>
       <div class="asbody">
         <div class="asrole">◆ 助教</div>
-        <div class="asname">錢思予</div>
-        <div class="asrecord">800m 02:26 ｜ 1500m 05:00 ｜ 5000m 19:47<br>2023台北馬 半馬配速員</div>
-        <div class="asspec">國立體育大學 陸上運動競技學系<br>有意思跑步訓練營 助教</div>
+        <div class="asname">錢思妤</div>
+        <div class="asrecord">
+          800m 02:26.52 ｜ 1500m 05:00.81 ｜ 5000m 19:47.63
+        </div>
+        <div class="asspec">國立體育大學 陸上運動競技學系</div>
+        <div class="etitle" style="font-size:11px;margin-top:10px;">得獎經歷</div>
+        <div class="asspec">
+          112年新北市中等學校運動會 1500m 第2名 ｜ 5000m 第3名<br>
+          113年全國大專運動會 800m 第6名<br>
+          113年全國大專田徑公開賽 800m 第5名<br>
+          113年渣打公益馬拉松 13.5K 女總六
+        </div>
+        <div class="etitle" style="font-size:11px;margin-top:8px;">教學 / 特殊</div>
+        <div class="asspec">有意思跑步訓練營 助教<br>2023台北馬拉松 半馬配速員</div>
       </div>
     </div>
-    <!-- 浩全 -->
+
+    <!-- 羅浩全 -->
     <div class="ascard">
-      <div class="asphoto"><img src="images/trainer-haoquan.jpg" alt="浩全" onerror="this.parentElement.innerHTML='🏃'"></div>
+      <div class="asphoto"><img src="images/trainer-haoquan.jpg" alt="羅浩全" onerror="this.parentElement.innerHTML='🏃'"></div>
       <div class="asbody">
         <div class="asrole">◆ 助教</div>
-        <div class="asname">浩全</div>
-        <div class="asspec">介紹即將更新 🧡</div>
+        <div class="asname">羅浩全</div>
+        <div class="asrecord">
+          3000m障礙 9:35 ｜ 5000m 15:40<br>
+          10000m 34:28 ｜ 半馬 1:14:47 ｜ 全馬 2:58
+        </div>
+        <div class="asspec">國立體育大學 陸上運動競技學系</div>
+        <div class="etitle" style="font-size:11px;margin-top:10px;">得獎經歷</div>
+        <div class="asspec">
+          2022年 全中運 3000m障礙 🥈 ｜ 青年盃 🥇 ｜ 港都盃 🥇<br>
+          2021年 秋季盃 🥇 ｜ 全中錦 🥇 ｜ 全中運 🥈 ｜ 春季盃 🥇<br>
+          2020年 全中錦 3000m障礙 🥉 ｜ 春季盃 5000m 🥇
+        </div>
+        <div class="etitle" style="font-size:11px;margin-top:8px;">教學 / 特殊</div>
+        <div class="asspec">
+          Kobe麒跑班 助教<br>
+          有意思跑步訓練營 助教<br>
+          2023台北馬拉松 半馬配速員
+        </div>
       </div>
     </div>
+
     <!-- 紫琳 -->
     <div class="ascard">
       <div class="asphoto"><img src="images/trainer-zilin.jpg" alt="紫琳" onerror="this.parentElement.innerHTML='🏃'"></div>
@@ -217,29 +295,31 @@
           1500m 4:35.90（女子歷代20傑）<br>
           800m 2:13.37（女子歷代35傑）
         </div>
+        <div class="asspec">國立體育大學 陸上運動競技學系</div>
+        <div class="etitle" style="font-size:11px;margin-top:10px;">賽事成績</div>
         <div class="asspec">
-          國立體育大學 陸上運動競技學系<br>
-          教學專長：跑步訓練
+          <strong>2025：</strong>全國運動會 1500m 亞軍 ｜ 800m 季軍<br>
+          全國大專 1500m / 800m 冠軍<br>
+          <strong>2024：</strong>台北馬拉松 初半馬 1:22:03<br>
+          全國大專 1500m / 800m 冠軍<br>
+          <strong>2023：</strong>全國運動會 1500m 亞軍 ｜ 800m 冠軍<br>
+          全國大專 1500m 冠軍
         </div>
-        <div style="margin-top:10px;">
-          <div class="etitle" style="font-size:11px;">2025 賽事</div>
-          <div class="asspec">全國運動會 1500m 亞軍 ｜ 800m 季軍<br>全國大專運動會 1500m 冠軍 ｜ 800m 冠軍</div>
-          <div class="etitle" style="font-size:11px;margin-top:8px;">2024 賽事</div>
-          <div class="asspec">台北馬拉松 初半馬 1:22:03<br>全國大專運動會 1500m / 800m 冠軍</div>
-          <div class="etitle" style="font-size:11px;margin-top:8px;">2023 賽事</div>
-          <div class="asspec">全國運動會 1500m 亞軍 ｜ 800m 冠軍<br>全國大專運動會 1500m 冠軍</div>
-          <div class="etitle" style="font-size:11px;margin-top:8px;">證照</div>
-          <div class="badges" style="margin-top:4px;">
-            <span class="badge">C級田徑教練</span>
-            <span class="badge">C級田徑裁判</span>
-            <span class="badge">C級重量訓練教練</span>
-            <span class="badge">親子幼兒體適能指導員</span>
-          </div>
-          <div class="etitle" style="font-size:11px;margin-top:8px;">教學經歷</div>
-          <div class="asspec">有意思跑步訓練營 / 萌少女跑 / SRC微笑跑團 / Adidas Runners Taipei 助教<br>2021–2023 台北馬拉松 半馬配速員</div>
+        <div class="etitle" style="font-size:11px;margin-top:8px;">證照</div>
+        <div class="cbadges">
+          <span class="cbadge">C級田徑教練</span>
+          <span class="cbadge">C級田徑裁判</span>
+          <span class="cbadge">C級重量訓練教練</span>
+          <span class="cbadge">親子幼兒體適能指導員</span>
+        </div>
+        <div class="etitle" style="font-size:11px;margin-top:8px;">教學 / 特殊</div>
+        <div class="asspec">
+          有意思/萌少女跑/SRC微笑跑團/Adidas Runners Taipei 助教<br>
+          2021–2023 台北馬拉松 半馬配速員
         </div>
       </div>
     </div>
+
   </div>
 
 </section>
