@@ -3,36 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>配速計算機 - 有意思跑步訓練班</title>
+<title>跑步工具 - 有意思跑步訓練班</title>
 <link rel="stylesheet" href="css/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <nav id="navbar">
-  <a href="index.html" class="nav-logo">有意思 <span>跑步</span></a>
+  <a href="index.html" class="nav-logo">有意思 <span>跑步訓練班</span></a>
   <button class="hamburger" id="hamburger">&#9776;</button>
   <ul class="nav-links" id="nav-links">
     <li><a href="index.html">首頁</a></li>
-    <li><a href="courses.html">所有課程</a></li>
-    <li><a href="calculator.html">配速計算</a></li>
+    <li><a href="coaches.html">師資介紹</a></li>
+    <li><a href="courses.html">課程方案</a></li>
+    <li><a href="calculator.html">跑步工具</a></li>
     <li><a href="contact.html">聯絡我們</a></li>
     <li><a href="courses.html" class="nav-cta">立即報名</a></li>
   </ul>
 </nav>
 
-<div class="page-header">
-  <div class="section-label light">工具</div>
+<div class="page-header" style="background:#1a1410;">
+  <div class="section-label light">◆ 跑步工具</div>
   <h1 class="page-title">跑者計算機</h1>
-  <p class="page-sub">輸入你的成績，預測等效配速與訓練區間</p>
+  <p class="page-sub">跑步能力預測、心率五區、最大攝氧量、配速計算</p>
 </div>
 
 <section class="calc-section">
-  <!-- VDOT Calculator -->
-  <div class="calc-card reveal">
-    <h2 class="calc-title">⚡ VDOT 跑步能力預測</h2>
-    <p class="calc-sub">輸入你的比賽距離與完賽時間，預測你在其他距離的等效成績</p>
 
+  <!-- 跑步能力預測 -->
+  <div class="calc-card reveal">
+    <h2 class="calc-title">⚡ 跑步能力預測</h2>
+    <p class="calc-sub">輸入你的比賽距離與完賽時間，預測等效成績與建議訓練配速</p>
     <div class="calc-form">
       <div class="form-row">
         <label>選擇距離</label>
@@ -46,32 +47,22 @@
       <div class="form-row">
         <label>完賽時間</label>
         <div class="time-inputs">
-          <div class="time-input-wrap">
-            <input type="number" id="hours" min="0" max="9" placeholder="0" />
-            <span>時</span>
-          </div>
-          <div class="time-input-wrap">
-            <input type="number" id="minutes" min="0" max="59" placeholder="00" />
-            <span>分</span>
-          </div>
-          <div class="time-input-wrap">
-            <input type="number" id="seconds" min="0" max="59" placeholder="00" />
-            <span>秒</span>
-          </div>
+          <div class="time-input-wrap"><input type="number" id="hours" min="0" max="9" placeholder="0"/><span>時</span></div>
+          <div class="time-input-wrap"><input type="number" id="minutes" min="0" max="59" placeholder="00"/><span>分</span></div>
+          <div class="time-input-wrap"><input type="number" id="seconds" min="0" max="59" placeholder="00"/><span>秒</span></div>
         </div>
       </div>
-      <button class="btn-primary calc-btn" onclick="calcVDOT()">計算</button>
+      <button class="btn-primary calc-btn" style="background:#c8a84b;" onclick="calcVDOT()">計算</button>
     </div>
-
     <div id="vdot-result" class="calc-result hidden">
       <div class="result-header">
         <div class="result-vdot">
-          <div class="result-label">VDOT</div>
-          <div class="result-num" id="vdot-value">—</div>
+          <div class="result-label">跑步能力值</div>
+          <div class="result-num" id="vdot-value" style="color:#c8a84b;">—</div>
         </div>
         <div class="result-pace">
           <div class="result-label">平均配速</div>
-          <div class="result-num" id="avg-pace">—</div>
+          <div class="result-num" id="avg-pace" style="color:#c8a84b;">—</div>
         </div>
       </div>
       <h3 style="margin:32px 0 16px;font-family:'Noto Serif TC',serif;">等效成績預測</h3>
@@ -81,272 +72,309 @@
     </div>
   </div>
 
-  <!-- Pace Calculator -->
+  <!-- 心率五區 -->
+  <div class="calc-card reveal">
+    <h2 class="calc-title">❤️ 心率五區計算機</h2>
+    <p class="calc-sub">使用 Karvonen 公式（最大心率 − 安靜心率）計算你的五個心率訓練區間</p>
+    <div class="calc-form">
+      <div class="form-row">
+        <label>最大心率 HRmax（bpm）</label>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <input type="number" id="max-hr" placeholder="例：185" style="width:110px;padding:12px;border:1.5px solid var(--border);background:var(--off-white);border-radius:2px;font-size:16px;font-family:'Noto Sans TC',sans-serif;" />
+          <span style="font-size:13px;color:var(--muted);">若不清楚可用 220 − 年齡 估算</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>安靜心率 HRrest（bpm）</label>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <input type="number" id="rest-hr" placeholder="例：55" style="width:110px;padding:12px;border:1.5px solid var(--border);background:var(--off-white);border-radius:2px;font-size:16px;font-family:'Noto Sans TC',sans-serif;" />
+          <span style="font-size:13px;color:var(--muted);">早上起床前靜躺量測最準確</span>
+        </div>
+      </div>
+      <button class="btn-primary calc-btn" style="background:#c8a84b;" onclick="calcHRZones()">計算心率區間</button>
+    </div>
+    <div id="hr-result-wrap" class="hidden" style="margin-top:32px;padding-top:32px;border-top:1px solid var(--border);">
+      <div id="hr-formula" style="font-size:13px;color:var(--muted);margin-bottom:20px;padding:12px;background:var(--cream);"></div>
+      <div id="hr-zone-result"></div>
+    </div>
+  </div>
+
+  <!-- 最大攝氧量 -->
+  <div class="calc-card reveal">
+    <h2 class="calc-title">🫁 最大攝氧量估算（VO₂max）</h2>
+    <p class="calc-sub">輸入你的比賽成績，估算你的最大攝氧量（ml/kg/min）</p>
+    <div class="tab-btns">
+      <button class="tab-btn active" onclick="switchVo2Tab('race')">用比賽成績估算</button>
+      <button class="tab-btn" onclick="switchVo2Tab('cooper')">Cooper 12分鐘跑</button>
+    </div>
+    <!-- 比賽成績估算 -->
+    <div id="vo2-tab-race" class="tab-content">
+      <div class="form-row">
+        <label>選擇距離</label>
+        <div class="distance-btns">
+          <button class="dist-btn active" data-dist2="5" onclick="setVo2Dist(this,5)">5K</button>
+          <button class="dist-btn" data-dist2="10" onclick="setVo2Dist(this,10)">10K</button>
+          <button class="dist-btn" data-dist2="21.0975" onclick="setVo2Dist(this,21.0975)">半馬</button>
+          <button class="dist-btn" data-dist2="42.195" onclick="setVo2Dist(this,42.195)">全馬</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>完賽時間</label>
+        <div class="time-inputs">
+          <div class="time-input-wrap"><input type="number" id="vo2-h" placeholder="0" min="0"/><span>時</span></div>
+          <div class="time-input-wrap"><input type="number" id="vo2-m" placeholder="00" min="0" max="59"/><span>分</span></div>
+          <div class="time-input-wrap"><input type="number" id="vo2-s" placeholder="00" min="0" max="59"/><span>秒</span></div>
+        </div>
+      </div>
+      <button class="btn-primary calc-btn" style="background:#c8a84b;" onclick="calcVo2Race()">估算 VO₂max</button>
+    </div>
+    <!-- Cooper -->
+    <div id="vo2-tab-cooper" class="tab-content hidden">
+      <div class="form-row">
+        <label>12 分鐘內跑了多少公尺？</label>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <input type="number" id="cooper-dist" placeholder="例：2800" style="width:140px;padding:12px;border:1.5px solid var(--border);background:var(--off-white);border-radius:2px;font-size:16px;font-family:'Noto Sans TC',sans-serif;" />
+          <span style="font-size:13px;color:var(--muted);">公尺</span>
+        </div>
+      </div>
+      <button class="btn-primary calc-btn" style="background:#c8a84b;" onclick="calcVo2Cooper()">估算 VO₂max</button>
+    </div>
+    <div id="vo2-result" class="hidden" style="margin-top:24px;">
+      <div style="display:flex;gap:40px;align-items:flex-end;padding:24px;background:var(--off-white);border-left:3px solid #c8a84b;">
+        <div>
+          <div style="font-size:11px;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">估算 VO₂max</div>
+          <div id="vo2-value" style="font-family:'DM Serif Display',serif;font-size:52px;color:#c8a84b;line-height:1;"></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px;">ml / kg / min</div>
+        </div>
+        <div id="vo2-level" style="font-size:14px;color:var(--muted);max-width:260px;line-height:1.8;"></div>
+      </div>
+      <div id="vo2-table" style="margin-top:16px;"></div>
+    </div>
+  </div>
+
+  <!-- 配速計算 -->
   <div class="calc-card reveal">
     <h2 class="calc-title">🏃 配速計算機</h2>
-    <p class="calc-sub">計算目標配速、完賽時間或距離</p>
-
+    <p class="calc-sub">計算目標配速或預計完賽時間</p>
     <div class="tab-btns">
       <button class="tab-btn active" onclick="switchTab('pace')">求配速</button>
       <button class="tab-btn" onclick="switchTab('time')">求完賽時間</button>
     </div>
-
-    <!-- Tab: 求配速 -->
     <div id="tab-pace" class="tab-content">
-      <div class="form-row">
-        <label>距離 (km)</label>
-        <input type="number" id="p-dist" placeholder="例：42.195" step="0.001" />
-      </div>
+      <div class="form-row"><label>距離 (km)</label><input type="number" id="p-dist" placeholder="例：42.195" step="0.001"/></div>
       <div class="form-row">
         <label>目標完賽時間</label>
         <div class="time-inputs">
-          <div class="time-input-wrap"><input type="number" id="p-h" placeholder="0" min="0" /><span>時</span></div>
-          <div class="time-input-wrap"><input type="number" id="p-m" placeholder="00" min="0" max="59" /><span>分</span></div>
-          <div class="time-input-wrap"><input type="number" id="p-s" placeholder="00" min="0" max="59" /><span>秒</span></div>
+          <div class="time-input-wrap"><input type="number" id="p-h" placeholder="0" min="0"/><span>時</span></div>
+          <div class="time-input-wrap"><input type="number" id="p-m" placeholder="00" min="0" max="59"/><span>分</span></div>
+          <div class="time-input-wrap"><input type="number" id="p-s" placeholder="00" min="0" max="59"/><span>秒</span></div>
         </div>
       </div>
-      <button class="btn-primary calc-btn" onclick="calcPace()">計算配速</button>
-      <div id="pace-result" class="simple-result hidden">
-        目標配速：<strong id="pace-output"></strong>
-      </div>
+      <button class="btn-primary calc-btn" style="background:#c8a84b;" onclick="calcPace()">計算配速</button>
+      <div id="pace-result" class="simple-result hidden">目標配速：<strong id="pace-output"></strong></div>
     </div>
-
-    <!-- Tab: 求完賽時間 -->
     <div id="tab-time" class="tab-content hidden">
-      <div class="form-row">
-        <label>距離 (km)</label>
-        <input type="number" id="t-dist" placeholder="例：42.195" step="0.001" />
-      </div>
+      <div class="form-row"><label>距離 (km)</label><input type="number" id="t-dist" placeholder="例：42.195" step="0.001"/></div>
       <div class="form-row">
         <label>目標配速 (分:秒 / km)</label>
         <div class="time-inputs">
-          <div class="time-input-wrap"><input type="number" id="t-m" placeholder="05" min="0" /><span>分</span></div>
-          <div class="time-input-wrap"><input type="number" id="t-s" placeholder="30" min="0" max="59" /><span>秒</span></div>
+          <div class="time-input-wrap"><input type="number" id="t-m" placeholder="05" min="0"/><span>分</span></div>
+          <div class="time-input-wrap"><input type="number" id="t-s" placeholder="30" min="0" max="59"/><span>秒</span></div>
         </div>
       </div>
-      <button class="btn-primary calc-btn" onclick="calcTime()">計算完賽時間</button>
-      <div id="time-result" class="simple-result hidden">
-        預計完賽時間：<strong id="time-output"></strong>
-      </div>
+      <button class="btn-primary calc-btn" style="background:#c8a84b;" onclick="calcTime()">計算完賽時間</button>
+      <div id="time-result" class="simple-result hidden">預計完賽時間：<strong id="time-output"></strong></div>
     </div>
   </div>
 
-  <!-- Heart Rate Zone Calculator -->
-  <div class="calc-card reveal">
-    <h2 class="calc-title">❤️ 心率五區計算機</h2>
-    <p class="calc-sub">使用 Karvonen 公式（最大心率 - 安靜心率）計算你的五個心率訓練區間</p>
-    <div class="calc-form">
-      <div class="form-row">
-        <label>最大心率 (HRmax)</label>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <input type="number" id="max-hr" placeholder="例：185" style="width:120px;padding:12px;border:1.5px solid var(--border);background:var(--off-white);border-radius:2px;font-size:16px;" />
-          <span style="font-size:13px;color:var(--muted)">bpm　　若不清楚可用 220 - 年齡 估算</span>
-        </div>
-      </div>
-      <div class="form-row">
-        <label>安靜心率 (HRrest)</label>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <input type="number" id="rest-hr" placeholder="例：55" style="width:120px;padding:12px;border:1.5px solid var(--border);background:var(--off-white);border-radius:2px;font-size:16px;" />
-          <span style="font-size:13px;color:var(--muted)">bpm　　早上起床前靜躺量測最準確</span>
-        </div>
-      </div>
-      <button class="btn-primary calc-btn" onclick="calcHRZones()" style="background:#c8a84b;">計算心率區間</button>
-    </div>
-    <div id="hr-result-wrap" class="hidden" style="margin-top:32px;padding-top:32px;border-top:1px solid var(--border);">
-      <div id="hr-formula" style="font-size:13px;color:var(--muted);margin-bottom:20px;"></div>
-      <div id="hr-zone-result"></div>
-    </div>
-  </div>
 </section>
 
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand">有意思跑步訓練班</div>
+    <div class="footer-brand" style="color:#c8a84b;">有意思跑步訓練班</div>
     <div class="footer-links-group">
       <a href="index.html">首頁</a>
+      <a href="coaches.html">師資介紹</a>
       <a href="courses.html">課程</a>
-      <a href="calculator.html">配速計算</a>
+      <a href="calculator.html">跑步工具</a>
       <a href="contact.html">聯絡</a>
     </div>
-    <div class="footer-copy">© 2025 有意思. All rights reserved.</div>
+    <div class="footer-copy">© 2025 有意思跑步訓練班. All rights reserved.</div>
   </div>
 </footer>
 
 <script src="js/main.js"></script>
 <script>
-// ── VDOT Logic ──
+// ── 跑步能力預測 ──
 let selectedDist = 5;
-document.querySelectorAll('.dist-btn').forEach(btn => {
+document.querySelectorAll('.dist-btn[data-dist]').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.dist-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.dist-btn[data-dist]').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     selectedDist = parseFloat(btn.dataset.dist);
   });
 });
 
 function calcVDOT() {
-  const h = parseInt(document.getElementById('hours').value) || 0;
-  const m = parseInt(document.getElementById('minutes').value) || 0;
-  const s = parseInt(document.getElementById('seconds').value) || 0;
-  const totalSec = h * 3600 + m * 60 + s;
-  if (totalSec === 0) { alert('請輸入完賽時間'); return; }
-
-  const dist = selectedDist * 1000; // meters
-  const t = totalSec / 60; // minutes
-
-  // Jack Daniels VDOT formula
-  const vo2 = (-4.60 + 0.182258 * (dist / t) + 0.000104 * Math.pow(dist / t, 2));
-  const pct  = (0.8 + 0.1894393 * Math.exp(-0.012778 * t) + 0.2989558 * Math.exp(-0.1932605 * t));
-  const vdot = Math.round(vo2 / pct * 10) / 10;
-
+  const h = parseInt(document.getElementById('hours').value)||0;
+  const m = parseInt(document.getElementById('minutes').value)||0;
+  const s = parseInt(document.getElementById('seconds').value)||0;
+  const totalSec = h*3600+m*60+s;
+  if (!totalSec) { alert('請輸入完賽時間'); return; }
+  const dist = selectedDist*1000, t = totalSec/60;
+  const vo2 = (-4.60+0.182258*(dist/t)+0.000104*Math.pow(dist/t,2));
+  const pct  = (0.8+0.1894393*Math.exp(-0.012778*t)+0.2989558*Math.exp(-0.1932605*t));
+  const vdot = Math.round(vo2/pct*10)/10;
   document.getElementById('vdot-value').textContent = vdot.toFixed(1);
-  const pacePerKm = totalSec / (selectedDist);
-  document.getElementById('avg-pace').textContent = formatPace(pacePerKm) + '/km';
-
-  // Equivalent races
-  const races = [
-    { name: '1500m', dist: 1.5 },
-    { name: '3000m', dist: 3 },
-    { name: '5K', dist: 5 },
-    { name: '10K', dist: 10 },
-    { name: '半馬', dist: 21.0975 },
-    { name: '全馬', dist: 42.195 },
-  ];
-
+  const pacePerKm = totalSec/selectedDist;
+  document.getElementById('avg-pace').textContent = formatPace(pacePerKm)+'/km';
+  const races = [{name:'1500m',dist:1.5},{name:'3000m',dist:3},{name:'5K',dist:5},{name:'10K',dist:10},{name:'半馬',dist:21.0975},{name:'全馬',dist:42.195}];
   const equivGrid = document.getElementById('equiv-grid');
-  equivGrid.innerHTML = '';
+  equivGrid.innerHTML='';
   races.forEach(r => {
-    const predSec = predictTime(vdot, r.dist);
-    const el = document.createElement('div');
-    el.className = 'equiv-item';
-    el.innerHTML = `<div class="equiv-dist">${r.name}</div><div class="equiv-time">${formatTime(predSec)}</div><div class="equiv-pace">${formatPace(predSec / r.dist)}/km</div>`;
+    const predSec = predictTime(vdot,r.dist);
+    const el = document.createElement('div'); el.className='equiv-item';
+    el.innerHTML=`<div class="equiv-dist">${r.name}</div><div class="equiv-time">${formatTime(predSec)}</div><div class="equiv-pace">${formatPace(predSec/r.dist)}/km</div>`;
     equivGrid.appendChild(el);
   });
-
-  // Training zones (Jack Daniels)
   const zones = [
-    { name: 'E 輕鬆跑', pct: [0.59, 0.74], desc: '日常有氧基礎訓練' },
-    { name: 'M 馬拉松配速', pct: [0.75, 0.84], desc: '馬拉松比賽配速練習' },
-    { name: 'T 節奏跑', pct: [0.83, 0.88], desc: '提升乳酸閾值' },
-    { name: 'I 間歇跑', pct: [0.95, 1.00], desc: '提升最大攝氧量' },
-    { name: 'R 重複跑', pct: [1.05, 1.15], desc: '提升跑步經濟性' },
+    {name:'E 輕鬆跑',pct:[0.59,0.74],desc:'日常有氧基礎'},
+    {name:'M 馬拉松配速',pct:[0.75,0.84],desc:'馬拉松比賽配速'},
+    {name:'T 節奏跑',pct:[0.83,0.88],desc:'提升乳酸閾值'},
+    {name:'I 間歇跑',pct:[0.95,1.00],desc:'提升最大攝氧量'},
+    {name:'R 重複跑',pct:[1.05,1.15],desc:'提升跑步經濟性'},
   ];
-
-  const zoneEl = document.getElementById('training-zones');
-  zoneEl.innerHTML = '';
-  const maxPace = pacePerKm;
+  const zoneEl = document.getElementById('training-zones'); zoneEl.innerHTML='';
   zones.forEach(z => {
-    const fastPace = maxPace / z.pct[1];
-    const slowPace = maxPace / z.pct[0];
-    const el = document.createElement('div');
-    el.className = 'zone-item';
-    el.innerHTML = `
-      <div class="zone-name">${z.name}</div>
-      <div class="zone-pace">${formatPace(fastPace)} – ${formatPace(slowPace)} /km</div>
-      <div class="zone-desc">${z.desc}</div>`;
+    const fp=pacePerKm/z.pct[1], sp=pacePerKm/z.pct[0];
+    const el=document.createElement('div'); el.className='zone-item';
+    el.innerHTML=`<div class="zone-name">${z.name}</div><div class="zone-pace">${formatPace(fp)} – ${formatPace(sp)} /km</div><div class="zone-desc">${z.desc}</div>`;
     zoneEl.appendChild(el);
   });
-
   document.getElementById('vdot-result').classList.remove('hidden');
 }
 
-function predictTime(vdot, dist) {
-  // Approximate: iterate to find time T where VDOT matches
-  const d = dist * 1000;
-  let lo = 60, hi = 36000, mid;
-  for (let i = 0; i < 50; i++) {
-    mid = (lo + hi) / 2;
-    const t = mid / 60;
-    const v2 = (-4.60 + 0.182258 * (d / t) + 0.000104 * Math.pow(d / t, 2));
-    const p  = (0.8 + 0.1894393 * Math.exp(-0.012778 * t) + 0.2989558 * Math.exp(-0.1932605 * t));
-    const v = v2 / p;
-    if (v > vdot) lo = mid; else hi = mid;
+function predictTime(vdot,dist) {
+  const d=dist*1000; let lo=60,hi=36000,mid;
+  for(let i=0;i<50;i++){
+    mid=(lo+hi)/2; const t=mid/60;
+    const v2=(-4.60+0.182258*(d/t)+0.000104*Math.pow(d/t,2));
+    const p=(0.8+0.1894393*Math.exp(-0.012778*t)+0.2989558*Math.exp(-0.1932605*t));
+    if(v2/p>vdot) lo=mid; else hi=mid;
   }
   return Math.round(mid);
 }
 
-function formatTime(sec) {
-  const h = Math.floor(sec / 3600);
-  const m = Math.floor((sec % 3600) / 60);
-  const s = Math.floor(sec % 60);
-  if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  return `${m}:${String(s).padStart(2,'0')}`;
+function formatTime(sec){const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=Math.floor(sec%60);return h>0?`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${m}:${String(s).padStart(2,'0')}`;}
+function formatPace(spm){const m=Math.floor(spm/60),s=Math.floor(spm%60);return`${m}'${String(s).padStart(2,'0')}"` ;}
+
+// ── 心率五區 ──
+function calcHRZones() {
+  const maxHR=parseInt(document.getElementById('max-hr').value);
+  const restHR=parseInt(document.getElementById('rest-hr').value);
+  if(!maxHR||!restHR||maxHR<=restHR){alert('請確認最大心率大於安靜心率');return;}
+  const hrr=maxHR-restHR;
+  const zones=[
+    {name:'Zone 1',label:'恢復 / 輕鬆跑',pct:[0.50,0.60],color:'#4CAF50',desc:'暖身、恢復，感覺非常輕鬆，可輕鬆說話'},
+    {name:'Zone 2',label:'有氧基礎',pct:[0.60,0.70],color:'#8BC34A',desc:'建立有氧基礎，可說話但稍微喘氣'},
+    {name:'Zone 3',label:'節奏跑',pct:[0.70,0.80],color:'#FFC107',desc:'馬拉松配速區，說話困難但尚可'},
+    {name:'Zone 4',label:'乳酸閾值',pct:[0.80,0.90],color:'#FF9800',desc:'提升乳酸閾值，說話非常困難'},
+    {name:'Zone 5',label:'最大攝氧量',pct:[0.90,1.00],color:'#F44336',desc:'全力衝刺，無法說話，短時間維持'},
+  ];
+  document.getElementById('hr-formula').innerHTML=`<strong>心率儲備 (HRR)</strong> = 最大心率 ${maxHR} − 安靜心率 ${restHR} = <strong>${hrr} bpm</strong>`;
+  let html='';
+  zones.forEach(z=>{
+    const low=Math.round(z.pct[0]*hrr+restHR), high=Math.round(z.pct[1]*hrr+restHR);
+    html+=`<div class="hr-zone-item"><div class="hz-color" style="background:${z.color}"></div><div class="hz-main"><div class="hz-name">${z.name} <span class="hz-label">${z.label}</span></div><div class="hz-bpm">${low} – ${high} <span>bpm</span></div><div class="hz-desc">${z.desc}</div></div><div class="hz-pct">${Math.round(z.pct[0]*100)}–${Math.round(z.pct[1]*100)}%</div></div>`;
+  });
+  document.getElementById('hr-zone-result').innerHTML=html;
+  document.getElementById('hr-result-wrap').classList.remove('hidden');
 }
 
-function formatPace(secPerKm) {
-  const m = Math.floor(secPerKm / 60);
-  const s = Math.floor(secPerKm % 60);
-  return `${m}'${String(s).padStart(2,'0')}"`;
+// ── VO2max ──
+let vo2Dist = 5;
+function setVo2Dist(btn, dist) {
+  document.querySelectorAll('#vo2-tab-race .dist-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); vo2Dist=dist;
+}
+function switchVo2Tab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+    if(tab==='race') b.classList.toggle('active',i===0);
+    else b.classList.toggle('active',i===1);
+  });
+  document.getElementById('vo2-tab-race').classList.toggle('hidden',tab!=='race');
+  document.getElementById('vo2-tab-cooper').classList.toggle('hidden',tab!=='cooper');
+  document.getElementById('vo2-result').classList.add('hidden');
+}
+function getVo2Level(vo2) {
+  if(vo2>=60) return{level:'優秀',desc:'屬於競技級跑者水平，可挑戰菁英賽事'};
+  if(vo2>=52) return{level:'很好',desc:'高於一般人，具備完成半馬全馬的良好基礎'};
+  if(vo2>=44) return{level:'良好',desc:'健康活躍水平，適合參加一般路跑賽事'};
+  if(vo2>=36) return{level:'普通',desc:'一般健康水平，透過訓練可以大幅提升'};
+  return{level:'待提升',desc:'建議從有氧基礎訓練開始，逐步提升心肺能力'};
+}
+function showVo2Result(vo2) {
+  document.getElementById('vo2-value').textContent=vo2.toFixed(1);
+  const lv=getVo2Level(vo2);
+  document.getElementById('vo2-level').innerHTML=`<strong style="color:#c8a84b;font-size:18px;">${lv.level}</strong><br>${lv.desc}`;
+  const ref=[
+    {group:'競技選手（男）',range:'60+'},
+    {group:'競技選手（女）',range:'50+'},
+    {group:'很好（一般男性）',range:'52–59'},
+    {group:'很好（一般女性）',range:'44–51'},
+    {group:'良好',range:'44–52'},
+    {group:'普通',range:'36–44'},
+  ];
+  let t='<table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;">';
+  t+='<tr style="background:var(--cream);"><th style="padding:8px 12px;text-align:left;border:1px solid var(--border);">族群</th><th style="padding:8px 12px;text-align:left;border:1px solid var(--border);">VO₂max 參考範圍</th></tr>';
+  ref.forEach(r=>{ t+=`<tr><td style="padding:8px 12px;border:1px solid var(--border);">${r.group}</td><td style="padding:8px 12px;border:1px solid var(--border);">${r.range}</td></tr>`; });
+  t+='</table>';
+  document.getElementById('vo2-table').innerHTML=t;
+  document.getElementById('vo2-result').classList.remove('hidden');
+}
+function calcVo2Race() {
+  const h=parseInt(document.getElementById('vo2-h').value)||0;
+  const m=parseInt(document.getElementById('vo2-m').value)||0;
+  const s=parseInt(document.getElementById('vo2-s').value)||0;
+  const totalSec=h*3600+m*60+s;
+  if(!totalSec){alert('請輸入完賽時間');return;}
+  const dist=vo2Dist*1000, t=totalSec/60;
+  const vo2raw=(-4.60+0.182258*(dist/t)+0.000104*Math.pow(dist/t,2));
+  const pct=(0.8+0.1894393*Math.exp(-0.012778*t)+0.2989558*Math.exp(-0.1932605*t));
+  showVo2Result(vo2raw/pct);
+}
+function calcVo2Cooper() {
+  const d=parseInt(document.getElementById('cooper-dist').value);
+  if(!d){alert('請輸入跑步距離');return;}
+  const vo2=(d-504.9)/44.73;
+  showVo2Result(vo2);
 }
 
-// ── Pace Calculator ──
+// ── 配速計算 ──
 function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0&&tab==='pace')||(i===1&&tab==='time')));
-  document.getElementById('tab-pace').classList.toggle('hidden', tab !== 'pace');
-  document.getElementById('tab-time').classList.toggle('hidden', tab !== 'time');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&tab==='pace')||(i===1&&tab==='time')));
+  document.getElementById('tab-pace').classList.toggle('hidden',tab!=='pace');
+  document.getElementById('tab-time').classList.toggle('hidden',tab!=='time');
 }
-
 function calcPace() {
-  const dist = parseFloat(document.getElementById('p-dist').value);
-  const h = parseInt(document.getElementById('p-h').value) || 0;
-  const m = parseInt(document.getElementById('p-m').value) || 0;
-  const s = parseInt(document.getElementById('p-s').value) || 0;
-  const totalSec = h * 3600 + m * 60 + s;
-  if (!dist || !totalSec) { alert('請填入距離與時間'); return; }
-  const pacePerKm = totalSec / dist;
-  document.getElementById('pace-output').textContent = formatPace(pacePerKm) + ' / km';
+  const dist=parseFloat(document.getElementById('p-dist').value);
+  const h=parseInt(document.getElementById('p-h').value)||0;
+  const m=parseInt(document.getElementById('p-m').value)||0;
+  const s=parseInt(document.getElementById('p-s').value)||0;
+  const totalSec=h*3600+m*60+s;
+  if(!dist||!totalSec){alert('請填入距離與時間');return;}
+  document.getElementById('pace-output').textContent=formatPace(totalSec/dist)+' / km';
   document.getElementById('pace-result').classList.remove('hidden');
 }
-
 function calcTime() {
-  const dist = parseFloat(document.getElementById('t-dist').value);
-  const pm = parseInt(document.getElementById('t-m').value) || 0;
-  const ps = parseInt(document.getElementById('t-s').value) || 0;
-  const pacePerKm = pm * 60 + ps;
-  if (!dist || !pacePerKm) { alert('請填入距離與配速'); return; }
-  const totalSec = pacePerKm * dist;
-  document.getElementById('time-output').textContent = formatTime(totalSec);
+  const dist=parseFloat(document.getElementById('t-dist').value);
+  const pm=parseInt(document.getElementById('t-m').value)||0;
+  const ps=parseInt(document.getElementById('t-s').value)||0;
+  const pacePerKm=pm*60+ps;
+  if(!dist||!pacePerKm){alert('請填入距離與配速');return;}
+  document.getElementById('time-output').textContent=formatTime(pacePerKm*dist);
   document.getElementById('time-result').classList.remove('hidden');
 }
 </script>
 </body>
 </html>
-<script>
-// ── Heart Rate Zone Calculator (Karvonen) ──
-function calcHRZones() {
-  const maxHR = parseInt(document.getElementById('max-hr').value);
-  const restHR = parseInt(document.getElementById('rest-hr').value);
-  if (!maxHR || !restHR || maxHR <= restHR) {
-    alert('請確認最大心率大於安靜心率'); return;
-  }
-  const hrr = maxHR - restHR; // Heart Rate Reserve
-  const zones = [
-    { name: 'Zone 1', label: '恢復 / 輕鬆跑', pct: [0.50, 0.60], color: '#4CAF50', desc: '暖身、恢復跑，感覺非常輕鬆，可輕鬆說話' },
-    { name: 'Zone 2', label: '有氧基礎', pct: [0.60, 0.70], color: '#8BC34A', desc: '建立有氧基礎，可說話但需稍微喘氣' },
-    { name: 'Zone 3', label: '節奏跑', pct: [0.70, 0.80], color: '#FFC107', desc: '馬拉松配速區，說話困難但尚可' },
-    { name: 'Zone 4', label: '乳酸閾值', pct: [0.80, 0.90], color: '#FF9800', desc: '提升乳酸閾值，說話非常困難' },
-    { name: 'Zone 5', label: '最大攝氧量', pct: [0.90, 1.00], color: '#F44336', desc: '全力衝刺，無法說話，只能短時間維持' },
-  ];
-  let html = '';
-  zones.forEach(z => {
-    const low = Math.round(z.pct[0] * hrr + restHR);
-    const high = Math.round(z.pct[1] * hrr + restHR);
-    const pctLow = Math.round(z.pct[0] * 100);
-    const pctHigh = Math.round(z.pct[1] * 100);
-    html += `
-      <div class="hr-zone-item">
-        <div class="hz-color" style="background:${z.color}"></div>
-        <div class="hz-main">
-          <div class="hz-name">${z.name} <span class="hz-label">${z.label}</span></div>
-          <div class="hz-bpm">${low} – ${high} <span>bpm</span></div>
-          <div class="hz-desc">${z.desc}</div>
-        </div>
-        <div class="hz-pct">${pctLow}–${pctHigh}%</div>
-      </div>`;
-  });
-  document.getElementById('hr-zone-result').innerHTML = html;
-  document.getElementById('hr-result-wrap').classList.remove('hidden');
-  document.getElementById('hr-formula').textContent =
-    `HRR = ${maxHR} - ${restHR} = ${hrr} bpm`;
-}
-</script>

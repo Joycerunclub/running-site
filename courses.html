@@ -3,48 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>所有課程 - 有意思跑步訓練班</title>
+<title>課程方案 - 有意思跑步訓練班</title>
 <link rel="stylesheet" href="css/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
 .course-hero-card {
-  display: grid; grid-template-columns: 1fr 1fr;
-  min-height: 480px; margin-bottom: 60px;
-  border: 1px solid var(--border); overflow: hidden;
+  display:grid; grid-template-columns:1fr 1fr;
+  min-height:460px; margin-bottom:48px;
+  border:1px solid var(--border); overflow:hidden;
 }
-.course-hero-card.reverse { direction: rtl; }
-.course-hero-card.reverse > * { direction: ltr; }
+.course-hero-card.reverse { direction:rtl; }
+.course-hero-card.reverse > * { direction:ltr; }
 .chc-img {
-  width: 100%; height: 100%; min-height: 400px;
-  object-fit: cover; background: var(--cream);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 80px; overflow: hidden;
+  width:100%; height:100%; min-height:380px;
+  overflow:hidden; background:var(--cream);
+  display:flex; align-items:center; justify-content:center; font-size:80px;
 }
-.chc-img img { width: 100%; height: 100%; object-fit: cover; }
-.chc-body {
-  padding: 48px; display: flex; flex-direction: column;
-  justify-content: center; background: #fff;
-}
-.chc-tag {
-  font-size: 10px; letter-spacing: 0.2em; color: #8b6f20;
-  text-transform: uppercase; margin-bottom: 12px;
-  display: flex; align-items: center; gap: 8px;
-}
-.chc-tag::before { content: '◆'; font-size: 8px; }
-.chc-title { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 900; margin-bottom: 14px; }
-.chc-desc { font-size: 14px; line-height: 2; color: var(--muted); margin-bottom: 24px; }
-.chc-features { list-style: none; margin-bottom: 28px; }
-.chc-features li {
-  font-size: 13px; color: var(--text);
-  padding: 8px 0; border-bottom: 1px solid var(--border);
-  display: flex; gap: 10px; line-height: 1.5;
-}
-.chc-features li span { color: #c8a84b; font-weight: 700; flex-shrink: 0; }
-@media (max-width: 900px) {
-  .course-hero-card { grid-template-columns: 1fr; }
-  .course-hero-card.reverse { direction: ltr; }
-  .chc-img { min-height: 260px; }
-  .chc-body { padding: 28px 24px; }
+.chc-img img { width:100%; height:100%; object-fit:cover; display:block; }
+.chc-body { padding:48px; display:flex; flex-direction:column; justify-content:center; background:#fff; }
+.chc-tag { font-size:10px; letter-spacing:0.2em; color:#8b6f20; text-transform:uppercase; margin-bottom:12px; }
+.chc-title { font-family:'Noto Serif TC',serif; font-size:28px; font-weight:900; margin-bottom:8px; }
+.chc-time { font-size:13px; color:#8b6f20; background:rgba(200,168,75,0.1); padding:10px 16px; border-left:3px solid #c8a84b; margin-bottom:20px; }
+.chc-desc { font-size:14px; line-height:2; color:var(--muted); margin-bottom:20px; }
+.chc-features { list-style:none; margin-bottom:28px; }
+.chc-features li { font-size:13px; color:var(--text); padding:8px 0; border-bottom:1px solid var(--border); display:flex; gap:10px; line-height:1.5; }
+.chc-features li span { color:#c8a84b; font-weight:700; flex-shrink:0; }
+@media(max-width:900px){
+  .course-hero-card { grid-template-columns:1fr; }
+  .course-hero-card.reverse { direction:ltr; }
+  .chc-img { min-height:250px; }
+  .chc-body { padding:28px 24px; }
 }
 </style>
 </head>
@@ -57,7 +45,7 @@
     <li><a href="index.html">首頁</a></li>
     <li><a href="coaches.html">師資介紹</a></li>
     <li><a href="courses.html">課程方案</a></li>
-    <li><a href="calculator.html">配速計算</a></li>
+    <li><a href="calculator.html">跑步工具</a></li>
     <li><a href="contact.html">聯絡我們</a></li>
     <li><a href="courses.html" class="nav-cta">立即報名</a></li>
   </ul>
@@ -66,7 +54,7 @@
 <div class="page-header" style="background:#1a1410;">
   <div class="section-label light">◆ 課程方案</div>
   <h1 class="page-title">選擇你的起點</h1>
-  <p class="page-sub">不論是初學者或進階跑者，我們都有適合你的課程</p>
+  <p class="page-sub">每期共 15 堂課，三種班別，找到最適合你的</p>
 </div>
 
 <section style="padding:60px 80px;">
@@ -74,18 +62,19 @@
   <!-- 初跑班 -->
   <div class="course-hero-card reveal">
     <div class="chc-img">
-      <img src="images/course-beginner.jpg" alt="初跑班" onerror="this.parentElement.innerHTML='🏃'">
+      <img src="images/course-beginner.jpg" alt="初跑班" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#c8a84b,#e8c96b)'">
     </div>
     <div class="chc-body">
-      <div class="chc-tag">Course 01</div>
+      <div class="chc-tag">◆ Course 01</div>
       <div class="chc-title">初跑班</div>
-      <p class="chc-desc">適合沒有跑步習慣、想培養運動習慣的你。從最基礎開始，讓跑步變成生活中「有意思」的事。</p>
+      <div class="chc-time">📍 週五　北田　19:30 – 21:00</div>
+      <p class="chc-desc">專為沒有跑步習慣、想從零開始的你設計。不用擔心自己跑得慢，教練會陪你一步一步建立正確的跑步基礎，讓運動成為生活中美好的一部分。</p>
       <ul class="chc-features">
         <li><span>✓</span> 從零開始，循序漸進建立跑步習慣</li>
         <li><span>✓</span> 跑姿基礎教學，減少受傷風險</li>
-        <li><span>✓</span> 暖身、跑步、緩和的完整訓練</li>
-        <li><span>✓</span> 與同學互相鼓勵，一起成長</li>
-        <li><span>⏱️</span> 每堂課 90 分鐘</li>
+        <li><span>✓</span> 暖身、跑步、緩和的完整訓練流程</li>
+        <li><span>✓</span> 與同學互相鼓勵，一起進步成長</li>
+        <li><span>📆</span> 每期共 15 堂課</li>
       </ul>
       <a href="contact.html" class="btn-primary" style="background:#c8a84b;align-self:flex-start;">立即報名</a>
     </div>
@@ -94,18 +83,19 @@
   <!-- 賽事班 -->
   <div class="course-hero-card reverse reveal">
     <div class="chc-img">
-      <img src="images/course-race.jpg" alt="賽事班" onerror="this.parentElement.innerHTML='🏅'">
+      <img src="images/course-race.jpg" alt="賽事班" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#2d4a2d,#4a7c59)'">
     </div>
     <div class="chc-body">
-      <div class="chc-tag">Course 02</div>
+      <div class="chc-tag">◆ Course 02</div>
       <div class="chc-title">賽事訓練班</div>
-      <p class="chc-desc">有跑步基礎、想挑戰比賽成績的你。週期化賽事訓練，幫你突破配速瓶頸，達到目標完賽時間。</p>
+      <div class="chc-time">📍 週四　板橋第一運動場</div>
+      <p class="chc-desc">有跑步基礎、想挑戰比賽成績的你。透過週期化賽事訓練計劃，搭配 VDOT 能力評估，幫你科學性地突破配速瓶頸、達成目標完賽時間。</p>
       <ul class="chc-features">
-        <li><span>✓</span> 週期化賽事訓練計劃</li>
-        <li><span>✓</span> VDOT 能力評估與配速規劃</li>
-        <li><span>✓</span> 速度訓練、長跑、節奏跑</li>
-        <li><span>✓</span> 比賽策略與心態調整</li>
-        <li><span>⏱️</span> 每堂課 90 分鐘</li>
+        <li><span>✓</span> 週期化賽事訓練，系統性提升能力</li>
+        <li><span>✓</span> VDOT 能力評估與個人配速規劃</li>
+        <li><span>✓</span> 速度訓練、長跑、節奏跑多元課程</li>
+        <li><span>✓</span> 比賽策略與心態建立</li>
+        <li><span>📆</span> 每期共 15 堂課</li>
       </ul>
       <a href="contact.html" class="btn-primary" style="background:#c8a84b;align-self:flex-start;">立即報名</a>
     </div>
@@ -114,18 +104,19 @@
   <!-- 肌力班 -->
   <div class="course-hero-card reveal">
     <div class="chc-img">
-      <img src="images/course-strength.jpg" alt="肌力班" onerror="this.parentElement.innerHTML='💪'">
+      <img src="images/course-strength.jpg" alt="肌力班" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a1a1a,#444)'">
     </div>
     <div class="chc-body">
-      <div class="chc-tag">Course 03</div>
+      <div class="chc-tag">◆ Course 03</div>
       <div class="chc-title">跑者肌力班</div>
-      <p class="chc-desc">專為跑者設計的肌力訓練課程。強化核心與下肢力量，讓你跑得更穩、更有效率，同時降低受傷機率。</p>
+      <div class="chc-time">📍 週三　北田　19:45 – 20:45</div>
+      <p class="chc-desc">專為跑者量身設計的肌力訓練課程。強化核心與下肢力量，讓你跑得更穩、更有效率，同時有效降低運動傷害的機率。</p>
       <ul class="chc-features">
-        <li><span>✓</span> 跑者專屬肌力訓練動作</li>
-        <li><span>✓</span> 核心穩定性強化訓練</li>
-        <li><span>✓</span> 臀部、大腿、小腿強化</li>
-        <li><span>✓</span> Max 教練專業指導</li>
+        <li><span>✓</span> 跑者專屬肌力訓練動作設計</li>
+        <li><span>✓</span> 核心穩定性與下肢力量強化</li>
+        <li><span>✓</span> 張冠良 Max 教練專業指導</li>
         <li><span>✓</span> 傷害預防與動作修正</li>
+        <li><span>📆</span> 每期共 15 堂課</li>
       </ul>
       <a href="contact.html" class="btn-primary" style="background:#c8a84b;align-self:flex-start;">立即報名</a>
     </div>
@@ -139,20 +130,25 @@
   <h2 class="section-title">你可能想知道的</h2>
   <div class="faq-list">
     <div class="faq-item">
-      <button class="faq-q">完全沒跑步經驗，可以報名嗎？<span>+</span></button>
-      <div class="faq-a">當然可以！初跑班就是專為從零開始的人設計的，教練會根據你的能力循序漸進安排課程內容。</div>
+      <button class="faq-q">完全沒有跑步經驗，也可以報名嗎？<span>+</span></button>
+      <div class="faq-a">當然可以！初跑班就是專門為從零開始的人所設計的。不用擔心跑太慢或跟不上，教練會依照每個人的狀況循序漸進安排課程，讓你在輕鬆愉快的氣氛中建立屬於自己的跑步節奏 🧡</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q">課程地點在哪裡？<span>+</span></button>
-      <div class="faq-a">課程地點請聯絡我們確認，會依照當期課程安排告知。</div>
+      <button class="faq-q">課程在哪裡上課？時間是什麼時候？<span>+</span></button>
+      <div class="faq-a">
+        三個班別的上課地點與時間如下：<br><br>
+        🏃 初跑班：週五　北田　19:30 – 21:00<br>
+        🏅 賽事班：週四　板橋第一運動場<br>
+        💪 肌力班：週三　北田　19:45 – 20:45
+      </div>
     </div>
     <div class="faq-item">
       <button class="faq-q">一期有幾堂課？<span>+</span></button>
-      <div class="faq-a">請聯絡我們或關注我們的 Instagram 取得最新課程資訊。</div>
+      <div class="faq-a">每期共有 15 堂課，讓你有足夠的時間循序漸進、穩定進步。具體上課日期請洽詢我們取得最新課程資訊。</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q">如果有舊傷怎麼辦？<span>+</span></button>
-      <div class="faq-a">我們有專業運動防護員陳韋璇隨班支援，如有傷痛問題建議事先告知教練，我們會協助調整訓練強度。</div>
+      <button class="faq-q">我可以同時報名多個班別嗎？<span>+</span></button>
+      <div class="faq-a">可以！很多學員會同時參加跑步班加肌力班，讓訓練更全面。如果想了解哪種組合最適合你，歡迎直接聯絡我們，教練會協助評估建議。</div>
     </div>
   </div>
 </section>
@@ -164,7 +160,7 @@
       <a href="index.html">首頁</a>
       <a href="coaches.html">師資介紹</a>
       <a href="courses.html">課程</a>
-      <a href="calculator.html">配速計算</a>
+      <a href="calculator.html">跑步工具</a>
       <a href="contact.html">聯絡</a>
     </div>
     <div class="footer-copy">© 2025 有意思跑步訓練班. All rights reserved.</div>
