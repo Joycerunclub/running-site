@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跑者補給站 - 有意思跑步訓練班</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+/* ── 頁面 Tab ── */
+.page-tabs {
+  display: flex; background: #fff; border-bottom: 2px solid var(--border);
+  position: sticky; top: 68px; z-index: 50;
+}
+.page-tab {
+  flex: 1; padding: 16px; font-size: 14px; font-weight: 600;
+  letter-spacing: 0.06em; border: none; background: none; cursor: pointer;
+  border-bottom: 3px solid transparent; margin-bottom: -2px;
+  transition: all .2s; font-family: 'Noto Sans TC', sans-serif;
+  color: var(--muted);
+}
+.page-tab.active { color: #8b6f20; border-bottom-color: #c8a84b; }
+.page-tab:hover:not(.active) { color: var(--text); }
+
+.tab-content-page { display: none; }
+.tab-content-page.active { display: block; }
+
+/* ── 分類 Filter ── */
+.cat-filter { display: flex; gap: 8px; flex-wrap: wrap; padding: 32px 80px 0; }
+.cf-btn {
+  padding: 8px 18px; font-size: 12px; letter-spacing: 0.1em;
+  border: 1.5px solid var(--border); background: none; cursor: pointer;
+  transition: all .2s; font-family: 'Noto Sans TC', sans-serif; border-radius: 2px;
+}
+.cf-btn.active { background: #c8a84b; color: #fff; border-color: #c8a84b; }
+.cf-btn:hover:not(.active) { border-color: #c8a84b; color: #8b6f20; }
+
+/* ── 產品網格 ── */
+.product-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; padding: 24px 80px 60px; }
+.product-card {
+  background: #fff; border: 1px solid var(--border);
+  overflow: hidden; transition: transform .25s, box-shadow .25s;
+  display: flex; flex-direction: column;
+}
+.product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.08); }
+.pc-cat-bar { height: 4px; }
+.pc-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+.pc-icon { font-size: 28px; margin-bottom: 10px; }
+.pc-name { font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 700; color: var(--black); margin-bottom: 4px; line-height: 1.4; }
+.pc-sub { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+.pc-timing { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+.pt { font-size: 10px; padding: 2px 7px; border-radius: 1px; border: 1px solid; }
+.pt-before { background: rgba(200,168,75,0.1); color: #8b6f20; border-color: rgba(200,168,75,0.3); }
+.pt-during { background: rgba(45,74,45,0.1); color: #2d4a2d; border-color: rgba(45,74,45,0.3); }
+.pt-after { background: rgba(184,92,56,0.1); color: #b85c38; border-color: rgba(184,92,56,0.3); }
+.pt-daily { background: rgba(107,107,107,0.1); color: #555; border-color: rgba(107,107,107,0.3); }
+.pc-price { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border); }
+.pc-group-price { font-family: 'DM Serif Display', serif; font-size: 20px; color: #c8a84b; line-height: 1; }
+.pc-orig-price { font-size: 11px; color: var(--muted); text-decoration: line-through; margin-top: 2px; }
+.pc-price-label { font-size: 10px; letter-spacing: 0.1em; color: #8b6f20; }
+.pc-note { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+/* 分類色條 */
+.cat-energy .pc-cat-bar { background: #c8a84b; }
+.cat-electrolyte .pc-cat-bar { background: #4a90d9; }
+.cat-drink .pc-cat-bar { background: #7cb87c; }
+.cat-capsule .pc-cat-bar { background: #b85c38; }
+.cat-health .pc-cat-bar { background: #9b59b6; }
+.cat-other .pc-cat-bar { background: #95a5a6; }
+
+/* ── 賽事攻略 ── */
+.race-section { padding: 48px 80px; }
+.race-tabs { display: flex; gap: 0; margin-bottom: 40px; border: 1.5px solid var(--border); width: fit-content; }
+.race-tab {
+  padding: 12px 28px; font-size: 13px; font-weight: 600;
+  border: none; background: none; cursor: pointer;
+  font-family: 'Noto Sans TC', sans-serif; color: var(--muted);
+  transition: all .2s; border-right: 1px solid var(--border);
+}
+.race-tab:last-child { border-right: none; }
+.race-tab.active { background: #c8a84b; color: #fff; }
+.race-plan { display: none; }
+.race-plan.active { display: block; }
+.race-timeline { position: relative; }
+.race-timeline::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.timeline-item { display: grid; grid-template-columns: 44px 1fr; gap: 20px; margin-bottom: 28px; position: relative; }
+.tl-dot {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #c8a84b; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0; z-index: 1;
+}
+.tl-content { background: #fff; border: 1px solid var(--border); padding: 20px; }
+.tl-time { font-size: 11px; letter-spacing: 0.15em; color: #8b6f20; text-transform: uppercase; margin-bottom: 4px; }
+.tl-title { font-family: 'Noto Serif TC', serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.tl-items { list-style: none; }
+.tl-items li { font-size: 13px; color: var(--muted); padding: 4px 0; display: flex; gap: 8px; }
+.tl-items li::before { content: '·'; color: #c8a84b; font-weight: 900; }
+
+/* ── 補給紀錄 ── */
+.log-section { padding: 48px 80px; }
+.log-form { background: #fff; border: 1px solid var(--border); padding: 32px; margin-bottom: 32px; }
+.log-form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.log-field { display: flex; flex-direction: column; gap: 6px; }
+.log-field label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; }
+.log-field input, .log-field select, .log-field textarea {
+  padding: 10px 14px; border: 1.5px solid var(--border);
+  background: var(--off-white); border-radius: 2px; font-size: 13px;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.log-field input:focus, .log-field select:focus, .log-field textarea:focus {
+  outline: none; border-color: #c8a84b;
+}
+.log-table-wrap { overflow-x: auto; }
+.log-table { width: 100%; border-collapse: collapse; }
+.log-table th { background: #1a1a1a; color: #fff; padding: 12px 16px; font-size: 12px; letter-spacing: 0.08em; text-align: left; }
+.log-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
+.log-table tr:hover td { background: rgba(200,168,75,0.04); }
+.log-table .del-btn { background: none; border: 1px solid var(--border); padding: 4px 10px; font-size: 11px; cursor: pointer; color: #b85c38; border-color: rgba(184,92,56,0.3); }
+.log-table .del-btn:hover { background: rgba(184,92,56,0.08); }
+.feel-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 1px; }
+.feel-good { background: rgba(76,175,80,0.1); color: #2e7d32; }
+.feel-ok { background: rgba(200,168,75,0.1); color: #8b6f20; }
+.feel-bad { background: rgba(184,92,56,0.1); color: #b85c38; }
+.empty-log { text-align: center; padding: 48px; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 900px) {
+  .cat-filter { padding: 24px 20px 0; }
+  .product-grid { grid-template-columns: 1fr 1fr; padding: 20px; gap: 12px; }
+  .race-section, .log-section { padding: 40px 20px; }
+  .log-form-grid { grid-template-columns: 1fr; }
+  .race-tabs { width: 100%; }
+  .race-tab { padding: 10px 16px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">有意思 <span>跑步訓練班</span></a>
+  <button class="hamburger" id="hamburger">&#9776;</button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">首頁</a></li>
+    <li><a href="coaches.html">師資介紹</a></li>
+    <li><a href="courses.html">課程方案</a></li>
+    <li><a href="calculator.html">跑步工具</a></li>
+    <li><a href="supplement.html">補給站</a></li>
+    <li><a href="contact.html">聯絡我們</a></li>
+    <li><a href="courses.html" class="nav-cta">立即報名</a></li>
+  </ul>
+</nav>
+
+<div class="page-header" style="background:#1a1410;">
+  <div class="section-label light">◆ 跑者補給站</div>
+  <h1 class="page-title">補給品目錄 × 賽事攻略</h1>
+  <p class="page-sub">選對補給，讓每一步都更有力量 🧡</p>
+</div>
+
+<!-- 頁面 Tabs -->
+<div class="page-tabs">
+  <button class="page-tab active" onclick="switchPageTab('products')">📦 補給品目錄</button>
+  <button class="page-tab" onclick="switchPageTab('strategy')">🏅 賽事補給攻略</button>
+  <button class="page-tab" onclick="switchPageTab('log')">📝 我的補給紀錄</button>
+</div>
+
+<!-- ══ TAB 1：補給品目錄 ══ -->
+<div id="tab-products" class="tab-content-page active">
+  <div class="cat-filter">
+    <button class="cf-btn active" onclick="filterProducts('all',this)">全部</button>
+    <button class="cf-btn" onclick="filterProducts('energy',this)">⚡ 能量膠/果膠</button>
+    <button class="cf-btn" onclick="filterProducts('electrolyte',this)">💧 電解質</button>
+    <button class="cf-btn" onclick="filterProducts('drink',this)">🥤 飲品/果凍</button>
+    <button class="cf-btn" onclick="filterProducts('capsule',this)">💊 膠囊/錠劑</button>
+    <button class="cf-btn" onclick="filterProducts('health',this)">🌿 保健營養</button>
+    <button class="cf-btn" onclick="filterProducts('other',this)">🎒 其他</button>
+  </div>
+
+  <div class="product-grid" id="product-grid">
+
+    <!-- ── 能量膠/果膠 ── -->
+    <div class="product-card cat-energy" data-cat="energy">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🚀</div>
+        <div class="pc-name">太空能量膠 MAX（小金膠）</div>
+        <div class="pc-sub">1盒</div>
+        <div class="pc-timing"><span class="pt pt-before">訓練前</span><span class="pt pt-during">比賽中</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$600</div>
+          <div class="pc-orig-price">原價 $720</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-energy" data-cat="energy">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">⚡</div>
+        <div class="pc-name">太空能量膠</div>
+        <div class="pc-sub">10包/盒</div>
+        <div class="pc-timing"><span class="pt pt-during">比賽中</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$550</div>
+          <div class="pc-orig-price">原價 $680</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-energy" data-cat="energy">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">⚡</div>
+        <div class="pc-name">Ultra 能量膠</div>
+        <div class="pc-sub">10包/盒</div>
+        <div class="pc-timing"><span class="pt pt-during">比賽中</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$700</div>
+          <div class="pc-orig-price">原價 $880</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-energy" data-cat="energy">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🍇</div>
+        <div class="pc-name">能量果膠 PRO｜原味</div>
+        <div class="pc-sub">10包/盒</div>
+        <div class="pc-timing"><span class="pt pt-before">訓練前</span><span class="pt pt-during">比賽中</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$600</div>
+          <div class="pc-orig-price">原價 $699</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-energy" data-cat="energy">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🍊</div>
+        <div class="pc-name">能量果膠 PRO｜葡萄柚</div>
+        <div class="pc-sub">10包/盒</div>
+        <div class="pc-timing"><span class="pt pt-before">訓練前</span><span class="pt pt-during">比賽中</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$600</div>
+          <div class="pc-orig-price">原價 $699</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-energy" data-cat="energy">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🍬</div>
+        <div class="pc-name">FOCHEWS 能量軟糖｜多多</div>
+        <div class="pc-sub">單包</div>
+        <div class="pc-timing"><span class="pt pt-during">比賽中</span></div>
+        <div class="pc-price">
+          <div class="pc-group-price">$43</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-energy" data-cat="energy">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🥭</div>
+        <div class="pc-name">FOCHEWS 能量軟糖｜芒果</div>
+        <div class="pc-sub">單包</div>
+        <div class="pc-timing"><span class="pt pt-during">比賽中</span></div>
+        <div class="pc-price">
+          <div class="pc-group-price">$43</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-energy" data-cat="energy">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🧊</div>
+        <div class="pc-name">力捷凍</div>
+        <div class="pc-timing"><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$1,650</div>
+          <div class="pc-orig-price">原價 $2,080</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 電解質 ── -->
+    <div class="product-card cat-electrolyte" data-cat="electrolyte">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🍋</div>
+        <div class="pc-name">電解質飲｜檸檬萊姆（A）</div>
+        <div class="pc-timing"><span class="pt pt-during">訓練中</span><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price"><div class="pc-group-price">$49</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-electrolyte" data-cat="electrolyte">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🫐</div>
+        <div class="pc-name">電解質飲｜海鹽莓果（B）</div>
+        <div class="pc-timing"><span class="pt pt-during">訓練中</span><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price"><div class="pc-group-price">$49</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-electrolyte" data-cat="electrolyte">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🍑</div>
+        <div class="pc-name">電解質飲｜水蜜桃（C）</div>
+        <div class="pc-timing"><span class="pt pt-during">訓練中</span><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price"><div class="pc-group-price">$49</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-electrolyte" data-cat="electrolyte">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🍒</div>
+        <div class="pc-name">酸櫻桃汁（O）</div>
+        <div class="pc-sub">櫻桃王口味</div>
+        <div class="pc-timing"><span class="pt pt-during">訓練中</span><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price"><div class="pc-group-price">$59</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-electrolyte" data-cat="electrolyte">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🌺</div>
+        <div class="pc-name">洛神烏梅（P）</div>
+        <div class="pc-sub">高電解質配方</div>
+        <div class="pc-timing"><span class="pt pt-during">訓練中</span><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price"><div class="pc-group-price">$59</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-electrolyte" data-cat="electrolyte">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">💙</div>
+        <div class="pc-name">電解質飲｜沁涼藍莓（Z）</div>
+        <div class="pc-timing"><span class="pt pt-during">訓練中</span></div>
+        <div class="pc-price"><div class="pc-group-price">洽詢</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-electrolyte" data-cat="electrolyte">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🔋</div>
+        <div class="pc-name">電解力（G）</div>
+        <div class="pc-sub">罐裝</div>
+        <div class="pc-timing"><span class="pt pt-during">訓練中</span><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price"><div class="pc-group-price">$450</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-electrolyte" data-cat="electrolyte">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">⚡</div>
+        <div class="pc-name">UP 電解力 Plus+（W）</div>
+        <div class="pc-timing"><span class="pt pt-during">訓練中</span><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price"><div class="pc-group-price">$630</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-electrolyte" data-cat="electrolyte">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">💧</div>
+        <div class="pc-name">水動能 電解質液 PLUS 鋅</div>
+        <div class="pc-timing"><span class="pt pt-during">訓練中</span><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$410</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-electrolyte" data-cat="electrolyte">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">💊</div>
+        <div class="pc-name">電解質膠囊</div>
+        <div class="pc-sub">90顆/瓶</div>
+        <div class="pc-timing"><span class="pt pt-during">訓練中</span><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$600</div>
+          <div class="pc-orig-price">原價 $750</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-electrolyte" data-cat="electrolyte">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🍒</div>
+        <div class="pc-name">酸櫻桃機能飲</div>
+        <div class="pc-sub">9包/盒</div>
+        <div class="pc-timing"><span class="pt pt-after">訓練後</span><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$630</div>
+          <div class="pc-orig-price">原價 $750</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 飲品/果凍 ── -->
+    <div class="product-card cat-drink" data-cat="drink">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🍌</div>
+        <div class="pc-name">香蕉可可（D）</div>
+        <div class="pc-timing"><span class="pt pt-before">訓練前</span><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price"><div class="pc-group-price">$55</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-drink" data-cat="drink">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🍍</div>
+        <div class="pc-name">鳳梨可可（E）</div>
+        <div class="pc-timing"><span class="pt pt-before">訓練前</span><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price"><div class="pc-group-price">$55</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-drink" data-cat="drink">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🥭</div>
+        <div class="pc-name">芒果可可（O）</div>
+        <div class="pc-timing"><span class="pt pt-before">訓練前</span><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price"><div class="pc-group-price">$65</div></div>
+      </div>
+    </div>
+
+    <!-- ── 膠囊/錠劑 ── -->
+    <div class="product-card cat-capsule" data-cat="capsule">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">💊</div>
+        <div class="pc-name">RC 膠囊（F）</div>
+        <div class="pc-sub">罐裝</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price"><div class="pc-group-price">$850</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-capsule" data-cat="capsule">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🫧</div>
+        <div class="pc-name">UP O2 膠囊（I）</div>
+        <div class="pc-timing"><span class="pt pt-before">訓練前</span><span class="pt pt-during">訓練中</span></div>
+        <div class="pc-price"><div class="pc-group-price">$1,150</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-capsule" data-cat="capsule">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🛡️</div>
+        <div class="pc-name">運動保護膠囊（J）</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price"><div class="pc-group-price">$950</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-capsule" data-cat="capsule">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">⚡</div>
+        <div class="pc-name">牛磺酸膠囊（K）</div>
+        <div class="pc-timing"><span class="pt pt-before">訓練前</span><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price"><div class="pc-group-price">$520</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-capsule" data-cat="capsule">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">☕</div>
+        <div class="pc-name">綠茶咖啡因膠囊（L）</div>
+        <div class="pc-timing"><span class="pt pt-before">訓練前 45分</span></div>
+        <div class="pc-price"><div class="pc-group-price">$620</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-capsule" data-cat="capsule">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🩸</div>
+        <div class="pc-name">微鐵膠囊（X）</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price">
+          <div class="pc-group-price">$780</div>
+          <div class="pc-orig-price">原價 $899</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-capsule" data-cat="capsule">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">☕</div>
+        <div class="pc-name">雙速咖啡因雙層錠</div>
+        <div class="pc-timing"><span class="pt pt-before">訓練前</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$720</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-capsule" data-cat="capsule">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🩸</div>
+        <div class="pc-name">氧元速 螯合鐵B群雙層錠</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$490</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-capsule" data-cat="capsule">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">☀️</div>
+        <div class="pc-name">液態盾 維生素 D</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$625</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-capsule" data-cat="capsule">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🦴</div>
+        <div class="pc-name">雙螯合 固鎂鈣</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$660</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-capsule" data-cat="capsule">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">⚡</div>
+        <div class="pc-name">牛磺酸鎂膠囊</div>
+        <div class="pc-sub">60顆/包</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$480</div>
+          <div class="pc-orig-price">原價 $599</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-capsule" data-cat="capsule">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🍬</div>
+        <div class="pc-name">耐力甜膠囊</div>
+        <div class="pc-sub">15顆/袋</div>
+        <div class="pc-timing"><span class="pt pt-during">比賽中</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$320</div>
+          <div class="pc-orig-price">原價 $400</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 保健營養 ── -->
+    <div class="product-card cat-health" data-cat="health">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🐟</div>
+        <div class="pc-name">運動魚油（H）</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price"><div class="pc-group-price">$850</div></div>
+      </div>
+    </div>
+
+    <div class="product-card cat-health" data-cat="health">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🍓</div>
+        <div class="pc-name">環原力 酵素莓果C</div>
+        <div class="pc-timing"><span class="pt pt-after">訓練後</span><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$550</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-health" data-cat="health">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🍇</div>
+        <div class="pc-name">白藜蘆醇</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$1,720</div>
+          <div class="pc-orig-price">原價 $2,180</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-health" data-cat="health">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">👁️</div>
+        <div class="pc-name">葉黃素</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$990</div>
+          <div class="pc-orig-price">原價 $1,380</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-health" data-cat="health">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🧠</div>
+        <div class="pc-name">睿智膏</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$1,330</div>
+          <div class="pc-orig-price">原價 $1,680</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-health" data-cat="health">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">💧</div>
+        <div class="pc-name">全潤</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$1,720</div>
+          <div class="pc-orig-price">原價 $2,180</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-health" data-cat="health">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🥛</div>
+        <div class="pc-name">乳清蛋白</div>
+        <div class="pc-sub">6入/盒</div>
+        <div class="pc-timing"><span class="pt pt-after">訓練後</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$330</div>
+          <div class="pc-orig-price">原價 $390</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card cat-health" data-cat="health">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">🦠</div>
+        <div class="pc-name">體保生 運動益生菌</div>
+        <div class="pc-sub">30入/盒</div>
+        <div class="pc-timing"><span class="pt pt-daily">日常</span></div>
+        <div class="pc-price">
+          <div class="pc-price-label">團購價</div>
+          <div class="pc-group-price">$799</div>
+          <div class="pc-orig-price">原價 $1,299</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 其他 ── -->
+    <div class="product-card cat-other" data-cat="other">
+      <div class="pc-cat-bar"></div>
+      <div class="pc-body">
+        <div class="pc-icon">📦</div>
+        <div class="pc-name">UP 膠囊收納盒（M）</div>
+        <div class="pc-sub">比賽必備收納</div>
+        <div class="pc-price"><div class="pc-group-price">$60</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ TAB 2：賽事補給攻略 ══ -->
+<div id="tab-strategy" class="tab-content-page">
+  <div class="race-section">
+    <div class="section-label" style="color:#8b6f20;">◆ 賽事補給攻略</div>
+    <h2 class="section-title">不同距離的補給策略</h2>
+
+    <div class="race-tabs">
+      <button class="race-tab active" onclick="switchRace('5k')">5K</button>
+      <button class="race-tab" onclick="switchRace('10k')">10K</button>
+      <button class="race-tab" onclick="switchRace('half')">半馬</button>
+      <button class="race-tab" onclick="switchRace('full')">全馬</button>
+    </div>
+
+    <!-- 5K -->
+    <div id="race-5k" class="race-plan active">
+      <div style="background:rgba(200,168,75,0.08);border-left:3px solid #c8a84b;padding:16px 20px;margin-bottom:32px;font-size:14px;color:var(--muted);line-height:1.8;">
+        5K 是強度高的短距離賽事，重點在賽前準備與賽後恢復，比賽中通常不需要額外補給。
+      </div>
+      <div class="race-timeline">
+        <div class="timeline-item">
+          <div class="tl-dot">🌅</div>
+          <div class="tl-content">
+            <div class="tl-time">賽前 2–3 小時</div>
+            <div class="tl-title">碳水正餐</div>
+            <ul class="tl-items"><li>白飯或麵包等好消化的碳水</li><li>避免高纖、高脂食物</li><li>補充足夠水分</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">☕</div>
+          <div class="tl-content">
+            <div class="tl-time">賽前 45–60 分</div>
+            <div class="tl-title">咖啡因補充（選擇性）</div>
+            <ul class="tl-items"><li>綠茶咖啡因膠囊（L）</li><li>雙速咖啡因雙層錠</li><li>可提升速度表現與專注力</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">🏁</div>
+          <div class="tl-content">
+            <div class="tl-time">比賽中</div>
+            <div class="tl-title">通常不需補給</div>
+            <ul class="tl-items"><li>若有水站可少量補水</li><li>維持呼吸節奏，專注配速</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">✅</div>
+          <div class="tl-content">
+            <div class="tl-time">賽後 30 分內</div>
+            <div class="tl-title">黃金恢復期</div>
+            <ul class="tl-items"><li>乳清蛋白補充肌肉修復</li><li>電解質補充（A/B/C）</li><li>環原力酵素莓果C 抗氧化</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10K -->
+    <div id="race-10k" class="race-plan">
+      <div style="background:rgba(200,168,75,0.08);border-left:3px solid #c8a84b;padding:16px 20px;margin-bottom:32px;font-size:14px;color:var(--muted);line-height:1.8;">
+        10K 介於速度與耐力之間，建議準備簡單補給以備不時之需，大多數跑者可靠賽前儲備完成。
+      </div>
+      <div class="race-timeline">
+        <div class="timeline-item">
+          <div class="tl-dot">🌅</div>
+          <div class="tl-content">
+            <div class="tl-time">賽前 2–3 小時</div>
+            <div class="tl-title">碳水正餐 + 補水</div>
+            <ul class="tl-items"><li>白飯、白吐司、地瓜（好消化）</li><li>提前補充電解質水</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">☕</div>
+          <div class="tl-content">
+            <div class="tl-time">賽前 45 分</div>
+            <div class="tl-title">咖啡因 + 能量補充</div>
+            <ul class="tl-items"><li>綠茶咖啡因膠囊或能量膠</li><li>UP O2 膠囊（提升氧氣利用）</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">🏃</div>
+          <div class="tl-content">
+            <div class="tl-time">比賽中（視需要）</div>
+            <div class="tl-title">輕量補給</div>
+            <ul class="tl-items"><li>水站補水即可</li><li>若感覺疲累可補 FOCHEWS 能量軟糖</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">✅</div>
+          <div class="tl-content">
+            <div class="tl-time">賽後 30 分內</div>
+            <div class="tl-title">恢復補給</div>
+            <ul class="tl-items"><li>乳清蛋白 + 碳水化合物</li><li>電解質飲補充礦物質</li><li>酸櫻桃機能飲 加速恢復</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 半馬 -->
+    <div id="race-half" class="race-plan">
+      <div style="background:rgba(200,168,75,0.08);border-left:3px solid #c8a84b;padding:16px 20px;margin-bottom:32px;font-size:14px;color:var(--muted);line-height:1.8;">
+        半馬（21K）需要完整的補給計劃！預計 90–150 分鐘，建議每 45–60 分鐘補充能量，並全程維持電解質補充。
+      </div>
+      <div class="race-timeline">
+        <div class="timeline-item">
+          <div class="tl-dot">🌅</div>
+          <div class="tl-content">
+            <div class="tl-time">賽前一天</div>
+            <div class="tl-title">碳水儲備</div>
+            <ul class="tl-items"><li>晚餐多吃碳水（碳水裝載）</li><li>睡前補充牛磺酸鎂膠囊（預防抽筋）</li><li>充足睡眠與水分</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">🌅</div>
+          <div class="tl-content">
+            <div class="tl-time">賽前 2–3 小時</div>
+            <div class="tl-title">賽前正餐</div>
+            <ul class="tl-items"><li>白飯或麵包（150–200g 碳水）</li><li>電解質水 500ml</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">☕</div>
+          <div class="tl-content">
+            <div class="tl-time">賽前 45–60 分</div>
+            <div class="tl-title">提升表現</div>
+            <ul class="tl-items"><li>咖啡因膠囊（綠茶咖啡因/雙速咖啡因）</li><li>UP O2 膠囊</li><li>能量膠 1 包（視個人習慣）</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">⚡</div>
+          <div class="tl-content">
+            <div class="tl-time">比賽中 第 45–60 分</div>
+            <div class="tl-title">第一次補給</div>
+            <ul class="tl-items"><li>能量膠 1 包（太空能量膠/Ultra 能量膠）</li><li>搭配 150–200ml 水</li><li>電解質膠囊或電解質飲</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">⚡</div>
+          <div class="tl-content">
+            <div class="tl-time">比賽中 第 90 分</div>
+            <div class="tl-title">第二次補給（若需要）</div>
+            <ul class="tl-items"><li>能量膠 1 包 或 FOCHEWS 能量軟糖</li><li>持續補充電解質水</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">✅</div>
+          <div class="tl-content">
+            <div class="tl-time">完賽後 30 分內</div>
+            <div class="tl-title">黃金恢復</div>
+            <ul class="tl-items"><li>乳清蛋白 20–30g</li><li>電解質補充（A/B/C/洛神烏梅P）</li><li>酸櫻桃機能飲 減少發炎</li><li>環原力酵素莓果C</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 全馬 -->
+    <div id="race-full" class="race-plan">
+      <div style="background:rgba(200,168,75,0.08);border-left:3px solid #c8a84b;padding:16px 20px;margin-bottom:32px;font-size:14px;color:var(--muted);line-height:1.8;">
+        全馬（42K）補給策略至關重要！3–5 小時的賽程中，完整的能量與電解質補充是完賽的關鍵。建議提前訓練補給節奏。
+      </div>
+      <div class="race-timeline">
+        <div class="timeline-item">
+          <div class="tl-dot">🌅</div>
+          <div class="tl-content">
+            <div class="tl-time">賽前 2–3 天</div>
+            <div class="tl-title">碳水裝載期</div>
+            <ul class="tl-items"><li>增加碳水攝取比例（60–70%）</li><li>白飯、義大利麵、地瓜</li><li>減少高纖蔬菜避免腸胃不適</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">🌅</div>
+          <div class="tl-content">
+            <div class="tl-time">賽前 2–3 小時</div>
+            <div class="tl-title">賽前正餐</div>
+            <ul class="tl-items"><li>白飯 / 白吐司 + 少量蛋白質</li><li>電解質水 500–700ml</li><li>牛磺酸鎂膠囊（預防抽筋）</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">☕</div>
+          <div class="tl-content">
+            <div class="tl-time">賽前 45–60 分</div>
+            <div class="tl-title">啟動補給</div>
+            <ul class="tl-items"><li>咖啡因膠囊（綠茶咖啡因/雙速咖啡因）</li><li>UP O2 膠囊</li><li>能量膠 1 包</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">⚡</div>
+          <div class="tl-content">
+            <div class="tl-time">比賽中 每 45 分鐘</div>
+            <div class="tl-title">定時補給（共 4–6 次）</div>
+            <ul class="tl-items"><li>能量膠 1 包（交替使用不同口味）</li><li>太空能量膠 MAX / Ultra 能量膠</li><li>搭配水站 150–200ml 水</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">💧</div>
+          <div class="tl-content">
+            <div class="tl-time">全程每個水站</div>
+            <div class="tl-title">電解質維持</div>
+            <ul class="tl-items"><li>電解質膠囊（每 60 分鐘 1 顆）</li><li>水站提供的電解質飲</li><li>天氣熱時加強補充洛神烏梅（P）</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">🦵</div>
+          <div class="tl-content">
+            <div class="tl-time">30K 後（撞牆期預防）</div>
+            <div class="tl-title">額外能量補充</div>
+            <ul class="tl-items"><li>耐力甜膠囊（維持肌肉持久力）</li><li>FOCHEWS 能量軟糖（快速糖分）</li><li>力捷凍（若有隨身攜帶）</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">✅</div>
+          <div class="tl-content">
+            <div class="tl-time">完賽後 30 分內</div>
+            <div class="tl-title">全面恢復補給</div>
+            <ul class="tl-items"><li>乳清蛋白 30–40g（肌肉修復）</li><li>電解質飲大量補充</li><li>酸櫻桃機能飲（消炎恢復）</li><li>環原力酵素莓果C（抗氧化）</li><li>預約運動按摩（加速恢復）</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TAB 3：我的補給紀錄 ══ -->
+<div id="tab-log" class="tab-content-page">
+  <div class="log-section">
+    <div class="section-label" style="color:#8b6f20;">◆ 個人補給紀錄</div>
+    <h2 class="section-title">記錄你的補給習慣</h2>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:32px;">紀錄存在你的瀏覽器，只有你自己看得到。換裝置或清除瀏覽器紀錄會消失。</p>
+
+    <!-- 新增紀錄表單 -->
+    <div class="log-form">
+      <h3 style="font-family:'Noto Serif TC',serif;font-size:18px;margin-bottom:20px;">➕ 新增補給紀錄</h3>
+      <div class="log-form-grid">
+        <div class="log-field">
+          <label>日期</label>
+          <input type="date" id="log-date">
+        </div>
+        <div class="log-field">
+          <label>訓練類型</label>
+          <select id="log-type">
+            <option>輕鬆跑</option>
+            <option>節奏跑</option>
+            <option>間歇訓練</option>
+            <option>長跑</option>
+            <option>肌力訓練</option>
+            <option>比賽（5K）</option>
+            <option>比賽（10K）</option>
+            <option>比賽（半馬）</option>
+            <option>比賽（全馬）</option>
+          </select>
+        </div>
+        <div class="log-field">
+          <label>距離（km）</label>
+          <input type="number" id="log-dist" placeholder="例：10" step="0.1">
+        </div>
+        <div class="log-field">
+          <label>補給品（訓練前）</label>
+          <input type="text" id="log-before" placeholder="例：咖啡因膠囊、香蕉可可">
+        </div>
+        <div class="log-field">
+          <label>補給品（訓練中）</label>
+          <input type="text" id="log-during" placeholder="例：太空能量膠、電解質飲">
+        </div>
+        <div class="log-field">
+          <label>補給品（訓練後）</label>
+          <input type="text" id="log-after" placeholder="例：乳清蛋白、酸櫻桃機能飲">
+        </div>
+      </div>
+      <div class="log-field" style="margin-bottom:16px;">
+        <label>身體感受</label>
+        <div style="display:flex;gap:12px;margin-top:4px;">
+          <label style="font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:400;">
+            <input type="radio" name="log-feel" value="good"> 😊 很好
+          </label>
+          <label style="font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:400;">
+            <input type="radio" name="log-feel" value="ok" checked> 😐 普通
+          </label>
+          <label style="font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:400;">
+            <input type="radio" name="log-feel" value="bad"> 😣 不好
+          </label>
+        </div>
+      </div>
+      <div class="log-field" style="margin-bottom:20px;">
+        <label>備註</label>
+        <textarea id="log-note" rows="2" placeholder="補給心得、需要調整的地方..."></textarea>
+      </div>
+      <button class="btn-primary" onclick="addLog()" style="background:#c8a84b;">儲存紀錄</button>
+    </div>
+
+    <!-- 紀錄列表 -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <h3 style="font-family:'Noto Serif TC',serif;font-size:18px;">📋 補給紀錄歷史</h3>
+      <button onclick="clearLogs()" style="font-size:12px;color:#b85c38;background:none;border:1px solid rgba(184,92,56,0.3);padding:6px 14px;cursor:pointer;">清除全部</button>
+    </div>
+    <div class="log-table-wrap">
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>類型</th>
+            <th>距離</th>
+            <th>訓練前</th>
+            <th>訓練中</th>
+            <th>訓練後</th>
+            <th>感受</th>
+            <th>備註</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="log-tbody"></tbody>
+      </table>
+      <div id="log-empty" class="empty-log">還沒有補給紀錄，新增第一筆吧！🧡</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand" style="color:#c8a84b;">有意思跑步訓練班</div>
+    <div class="footer-links-group">
+      <a href="index.html">首頁</a>
+      <a href="coaches.html">師資介紹</a>
+      <a href="courses.html">課程</a>
+      <a href="calculator.html">跑步工具</a>
+      <a href="supplement.html">補給站</a>
+      <a href="contact.html">聯絡</a>
+    </div>
+    <div class="footer-copy">© 2025 有意思跑步訓練班. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+// ── 頁面 Tab ──
+function switchPageTab(tab) {
+  document.querySelectorAll('.page-tab').forEach((t,i) => {
+    t.classList.toggle('active', ['products','strategy','log'][i] === tab);
+  });
+  document.querySelectorAll('.tab-content-page').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+// ── 產品分類 ──
+function filterProducts(cat, btn) {
+  document.querySelectorAll('.cf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+  });
+}
+
+// ── 賽事 Tab ──
+function switchRace(race) {
+  document.querySelectorAll('.race-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.race-plan').forEach(p => p.classList.remove('active'));
+  document.getElementById('race-' + race).classList.add('active');
+}
+
+// ── 補給紀錄 (localStorage) ──
+const STORAGE_KEY = 'joyce_supplement_logs';
+
+function getLogs() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch { return []; }
+}
+function saveLogs(logs) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
+}
+
+function renderLogs() {
+  const logs = getLogs();
+  const tbody = document.getElementById('log-tbody');
+  const empty = document.getElementById('log-empty');
+  tbody.innerHTML = '';
+  if (logs.length === 0) { empty.style.display = ''; return; }
+  empty.style.display = 'none';
+  logs.slice().reverse().forEach((log, i) => {
+    const feelMap = { good: '<span class="feel-tag feel-good">😊 很好</span>', ok: '<span class="feel-tag feel-ok">😐 普通</span>', bad: '<span class="feel-tag feel-bad">😣 不好</span>' };
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${log.date}</td>
+      <td>${log.type}</td>
+      <td>${log.dist ? log.dist + ' km' : '—'}</td>
+      <td style="max-width:120px;font-size:12px;">${log.before || '—'}</td>
+      <td style="max-width:120px;font-size:12px;">${log.during || '—'}</td>
+      <td style="max-width:120px;font-size:12px;">${log.after || '—'}</td>
+      <td>${feelMap[log.feel] || ''}</td>
+      <td style="max-width:120px;font-size:12px;">${log.note || '—'}</td>
+      <td><button class="del-btn" onclick="deleteLog(${logs.length - 1 - i})">刪除</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function addLog() {
+  const date = document.getElementById('log-date').value;
+  if (!date) { alert('請選擇日期'); return; }
+  const log = {
+    date, type: document.getElementById('log-type').value,
+    dist: document.getElementById('log-dist').value,
+    before: document.getElementById('log-before').value,
+    during: document.getElementById('log-during').value,
+    after: document.getElementById('log-after').value,
+    feel: document.querySelector('input[name="log-feel"]:checked')?.value || 'ok',
+    note: document.getElementById('log-note').value,
+  };
+  const logs = getLogs();
+  logs.push(log);
+  saveLogs(logs);
+  renderLogs();
+  // 清空表單
+  document.getElementById('log-before').value = '';
+  document.getElementById('log-during').value = '';
+  document.getElementById('log-after').value = '';
+  document.getElementById('log-dist').value = '';
+  document.getElementById('log-note').value = '';
+}
+
+function deleteLog(idx) {
+  if (!confirm('確定刪除這筆紀錄？')) return;
+  const logs = getLogs();
+  logs.splice(idx, 1);
+  saveLogs(logs);
+  renderLogs();
+}
+
+function clearLogs() {
+  if (!confirm('確定清除全部補給紀錄？')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  renderLogs();
+}
+
+// 設定今天日期
+document.getElementById('log-date').value = new Date().toISOString().split('T')[0];
+renderLogs();
+</script>
+</body>
+</html>
