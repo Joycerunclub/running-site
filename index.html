@@ -3,23 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>首頁 - 有意思跑步訓練班</title>
+<title>有意思跑步訓練班</title>
 <link rel="stylesheet" href="css/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-.hero { display:grid; grid-template-columns:1fr 1fr; min-height:100vh; padding-top:68px; }
-.hero-left { display:flex; flex-direction:column; justify-content:center; padding:80px 60px 80px 80px; }
-.hero-right { position:relative; overflow:hidden; }
-.hero-right img { width:100%; height:100%; object-fit:cover; display:block; }
-.hero-right-fallback {
-  width:100%; height:100%; min-height:500px;
-  background:linear-gradient(160deg,#c8a84b 0%,#e8c96b 50%,#f5e08a 100%);
-  display:flex; align-items:center; justify-content:center;
-}
+/* HERO 全寬大圖 */
+.hero-full{width:100%;height:88vh;min-height:560px;position:relative;overflow:hidden;margin-top:64px;}
+.hero-full img{width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.4) 60%,rgba(0,0,0,0.75) 100%);}
+.hero-text{position:absolute;bottom:0;left:0;right:0;padding:60px;text-align:center;color:#fff;}
+.hero-eyebrow{font-size:11px;letter-spacing:0.3em;color:#c8a84b;text-transform:uppercase;margin-bottom:16px;display:block;}
+.hero-h1{font-family:'Noto Serif TC',serif;font-size:clamp(40px,6vw,80px);font-weight:900;line-height:1.2;margin-bottom:16px;}
+.hero-h1 em{font-style:normal;color:#c8a84b;}
+.hero-p{font-size:16px;color:rgba(255,255,255,0.8);line-height:1.9;margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto;}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+/* LOGO BAR */
+.logo-bar{background:#fff;padding:24px 80px;display:flex;align-items:center;justify-content:center;gap:20px;border-bottom:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,0.05);}
+.logo-bar img{height:60px;object-fit:contain;}
+.logo-bar-sep{width:1px;height:36px;background:var(--border);}
+.logo-bar-name{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:900;color:var(--gold-dark);}
+.logo-bar-sub{font-size:11px;color:var(--muted);letter-spacing:0.12em;margin-top:3px;}
+/* STATS */
+.stats-strip{display:grid;grid-template-columns:repeat(3,1fr);background:var(--dark);}
+.ss-item{padding:40px 20px;text-align:center;border-right:1px solid rgba(255,255,255,0.07);}
+.ss-item:last-child{border-right:none;}
+.ss-num{font-family:'DM Serif Display',serif;font-size:52px;color:var(--gold);line-height:1;}
+.ss-label{font-size:12px;color:rgba(255,255,255,0.45);margin-top:8px;letter-spacing:0.1em;}
+/* ABOUT */
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;min-height:520px;}
+.about-logo-side{display:flex;align-items:center;justify-content:center;padding:64px;background:var(--cream);}
+.about-logo-side img{max-width:260px;width:100%;height:auto;}
+.about-text-side{padding:72px 64px;display:flex;flex-direction:column;justify-content:center;background:#fff;}
+.about-quote{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;color:var(--gold-dark);border-left:4px solid var(--gold);padding-left:20px;margin-bottom:28px;line-height:1.8;}
+.about-desc{font-size:15px;color:var(--muted);line-height:2;margin-bottom:28px;}
+.about-chips{display:flex;flex-wrap:wrap;gap:10px;}
+.about-chip{font-size:12px;padding:6px 16px;border:1.5px solid var(--gold);color:var(--gold-dark);border-radius:2px;letter-spacing:0.05em;}
+/* COURSES */
+.courses-wrap{padding:80px;background:var(--off-white);}
+.courses-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);margin-top:48px;}
+.c-col{padding:40px 32px;border-right:1px solid var(--border);transition:background .25s;}
+.c-col:last-child{border-right:none;}
+.c-col:hover{background:#fff;}
+.c-num{font-family:'DM Serif Display',serif;font-size:52px;color:rgba(200,168,75,0.18);line-height:1;margin-bottom:12px;}
+.c-icon{font-size:30px;margin-bottom:14px;}
+.c-title{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;margin-bottom:12px;}
+.c-time{font-size:12px;color:var(--gold-dark);background:rgba(200,168,75,0.08);border-left:3px solid var(--gold);padding:8px 12px;margin-bottom:14px;line-height:1.9;}
+.c-desc{font-size:13px;color:var(--muted);line-height:1.9;margin-bottom:20px;}
+.c-link{font-size:12px;letter-spacing:0.1em;color:var(--gold-dark);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:3px;display:inline-block;}
+/* QUOTE */
+.quote-wrap{background:var(--gold);padding:80px 40px;text-align:center;position:relative;overflow:hidden;}
+.quote-wrap::before{content:'"';position:absolute;top:-30px;left:32px;font-family:'DM Serif Display',serif;font-size:220px;color:rgba(255,255,255,0.08);line-height:1;}
+.quote-main{font-family:'Noto Serif TC',serif;font-size:clamp(18px,2.5vw,28px);color:#fff;line-height:2.1;max-width:660px;margin:0 auto 16px;position:relative;}
+.quote-main em{font-style:normal;color:rgba(255,255,255,0.65);}
+.quote-by{font-size:12px;letter-spacing:0.2em;color:rgba(255,255,255,0.55);}
+/* CTA */
+.cta-wrap{background:var(--dark);padding:80px 40px;text-align:center;}
+.cta-wrap h2{font-family:'Noto Serif TC',serif;font-size:clamp(22px,3vw,40px);color:#fff;margin-bottom:12px;}
+.cta-wrap p{font-size:15px;color:rgba(255,255,255,0.45);margin-bottom:36px;}
+/* MOBILE */
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr;}
-  .hero-right{display:none;}
-  .hero-left{padding:60px 24px;}
+  .hero-full{height:72vh;min-height:480px;}
+  .hero-text{padding:32px 20px;}
+  .logo-bar{padding:18px 20px;}
+  .stats-strip{grid-template-columns:1fr;}
+  .ss-item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.07);padding:28px;}
+  .about-wrap{grid-template-columns:1fr;}
+  .about-logo-side{padding:40px 24px;}
+  .about-text-side{padding:40px 24px;}
+  .courses-wrap{padding:48px 20px;}
+  .courses-grid{grid-template-columns:1fr;}
+  .c-col{border-right:none;border-bottom:1px solid var(--border);}
+  .quote-wrap{padding:60px 24px;}
+  .cta-wrap{padding:60px 24px;}
 }
 </style>
 </head>
@@ -33,214 +88,117 @@
     <li><a href="coaches.html">師資介紹</a></li>
     <li><a href="courses.html">課程方案</a></li>
     <li><a href="calculator.html">跑步工具</a></li>
-    <li><a href="supplement.html">補給站</a></li>
     <li><a href="nutrition.html">補給指南</a></li>
     <li><a href="contact.html">聯絡我們</a></li>
     <li><a href="courses.html" class="nav-cta">立即報名</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero" style="padding:0;padding-top:68px;">
-  <div class="hero-left">
-    <div class="hero-tag">第十四期 跑步訓練營 熱烈招生中</div>
-    <h1 class="hero-title">「有意思」<br><em>才會想開始</em></h1>
-    <p class="hero-sub">
-      心中充滿好奇、想要，所以才嘗試、探索。<br>
-      一起享受運動的過程中，<br>
-      讓跑步成為生活中「有意思」的樣子。
-    </p>
+<!-- ① 大圖 Hero -->
+<div class="hero-full">
+  <img src="images/hero-group.jpg" alt="有意思跑步訓練班" onerror="this.style.display='none'">
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <span class="hero-eyebrow">第十四期 跑步訓練營 熱烈招生中</span>
+    <h1 class="hero-h1">「有意思」<br><em>才會想開始</em></h1>
+    <p class="hero-p">心中充滿好奇、想要，所以才嘗試、探索<br>讓跑步成為生活中「有意思」的樣子</p>
     <div class="hero-btns">
-      <a href="courses.html" class="btn-primary" style="background:#c8a84b;">課程報名</a>
-      <a href="calculator.html" class="btn-secondary" style="color:#8b6f20;border-color:#c8a84b;">跑步工具</a>
+      <a href="courses.html" class="btn-primary" style="background:var(--gold);padding:14px 36px;font-size:14px;">立即報名</a>
+      <a href="coaches.html" class="btn-secondary" style="color:#fff;border-color:rgba(255,255,255,0.5);padding:14px 36px;font-size:14px;">認識教練</a>
     </div>
-    <div class="hero-stats">
-      <div class="stat"><div class="stat-num" style="color:#c8a84b;">14+</div><div class="stat-label">已辦期數</div></div>
-      <div class="stat"><div class="stat-num" style="color:#c8a84b;">5</div><div class="stat-label">專業師資</div></div>
-      <div class="stat"><div class="stat-num" style="color:#c8a84b;">💛</div><div class="stat-label">快樂跑者</div></div>
-    </div>
-  </div>
-  <div class="hero-right" style="position:relative;overflow:hidden;background:linear-gradient(160deg,#c8a84b 0%,#e8c96b 50%,#f5e08a 100%);">
-    <img src="images/hero-group.jpg" alt="有意思跑步訓練班" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" onerror="this.remove()">
-    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:0;">
-      <div style="text-align:center;">
-        <div style="font-family:'Noto Serif TC',serif;font-size:100px;color:rgba(139,100,20,0.12);font-weight:900;line-height:1;">有意思</div>
-        <div style="font-size:12px;letter-spacing:0.3em;color:rgba(139,100,20,0.4);margin-top:8px;">JOYCE RUN CLUB</div>
-      </div>
-    </div>
-    <div class="hero-badge" style="position:absolute;bottom:40px;left:40px;z-index:2;">
-      <p>從這開始種下屬於自己初心的種子<br><strong>成為一位快樂的跑者 🧡</strong></p>
-    </div>
-  </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-wrap" style="background:#c8a84b;">
-  <div class="marquee-track">
-    <span>跑步訓練</span><strong>✦</strong><span>肌力訓練</span><strong>✦</strong>
-    <span>體適能</span><strong>✦</strong><span>跑步能力預測</span><strong>✦</strong>
-    <span>配速計算</span><strong>✦</strong><span>心率五區</span><strong>✦</strong>
-    <span>最大攝氧量</span><strong>✦</strong><span>運動防護</span><strong>✦</strong>
-    <span>跑步訓練</span><strong>✦</strong><span>肌力訓練</span><strong>✦</strong>
-    <span>體適能</span><strong>✦</strong><span>跑步能力預測</span><strong>✦</strong>
-    <span>配速計算</span><strong>✦</strong><span>心率五區</span><strong>✦</strong>
-    <span>最大攝氧量</span><strong>✦</strong><span>運動防護</span><strong>✦</strong>
   </div>
 </div>
 
-<!-- ABOUT -->
-<section class="about reveal" id="about">
-  <div class="about-visual">
-    <div class="about-img-box" style="background:linear-gradient(180deg,#c8a84b 0%,#8b6f20 100%);position:relative;overflow:hidden;">
-      <img src="images/hero-group2.jpg" alt="有意思跑步" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
-      <div class="big-char" style="color:rgba(255,255,255,0.15);position:relative;z-index:1;">有<br>意<br>思</div>
-    </div>
-    <div class="about-img-accent" style="border-color:#c8a84b;"></div>
+<!-- ② Logo Bar -->
+<div class="logo-bar">
+  <img src="images/logo-yoysis.png" alt="有意思 Logo" onerror="this.style.display='none'">
+  <div class="logo-bar-sep"></div>
+  <div>
+    <div class="logo-bar-name">有意思跑步訓練班</div>
+    <div class="logo-bar-sub">JOYCE RUN CLUB · 第十四期</div>
   </div>
-  <div class="about-text">
-    <div class="section-label" style="color:#c8a84b;">◆ 關於有意思</div>
-    <h2 class="section-title">讓跑步成為生活中<br>「有意思」的樣子</h2>
-    <p>『有意思』才會想開始。心中充滿好奇、想要，所以才嘗試、探索。</p>
-    <p>一起享受運動的過程中，讓跑步成為生活中「有意思」的樣子。</p>
-    <p><strong>從這開始種下屬於自己初心的種子，成為一位快樂的跑者 🧡</strong></p>
-    <div class="philo-grid">
-      <div class="philo-card" data-char="有" style="border-color:#e8c96b;">
-        <h4 style="color:#8b6f20;">有意思</h4>
-        <p>心中充滿好奇與熱情，所以才願意嘗試、探索跑步的美好</p>
-      </div>
-      <div class="philo-card" data-char="跑" style="border-color:#e8c96b;">
-        <h4 style="color:#8b6f20;">快樂跑者</h4>
-        <p>跑步不只是訓練，而是找到屬於自己的節奏與初心</p>
-      </div>
-    </div>
-    <a href="courses.html" class="btn-primary" style="margin-top:32px;display:inline-block;background:#c8a84b;">查看所有課程</a>
-  </div>
-</section>
+</div>
 
-<!-- COACHES PREVIEW -->
-<section class="features reveal" style="background:#1a1a1a;">
-  <div class="section-label light">教練團隊</div>
-  <h2 class="section-title light">專業師資陣容</h2>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">🏆</div>
-      <h3>吳語喬 總教練</h3>
-      <p>臺北市立大學 陸上運動學系</p>
-      <ul>
-        <li>全馬 3:10:25 ｜ 半馬 1:28:44</li>
-        <li>女子歷代100傑</li>
-        <li>跑步訓練 / 週期化賽事訓練</li>
-        <li>New Balance 教練</li>
-      </ul>
-      <a href="coaches.html" class="feature-btn">查看完整介紹</a>
+<!-- ③ 數字條 -->
+<div class="stats-strip">
+  <div class="ss-item reveal"><div class="ss-num">14+</div><div class="ss-label">已辦期數</div></div>
+  <div class="ss-item reveal"><div class="ss-num">5</div><div class="ss-label">專業師資</div></div>
+  <div class="ss-item reveal"><div class="ss-num">15</div><div class="ss-label">堂 / 每期</div></div>
+</div>
+
+<!-- ④ 關於有意思 -->
+<div class="about-wrap reveal">
+  <div class="about-logo-side">
+    <img src="images/logo-yoysis.png" alt="有意思 Logo" onerror="this.style.display='none'">
+  </div>
+  <div class="about-text-side">
+    <div class="section-label" style="color:var(--gold-dark);">◆ 關於有意思</div>
+    <h2 class="section-title">讓跑步成為生活中<br>「有意思」的樣子</h2>
+    <div class="about-quote">「有意思」才會想開始<br>心中充滿好奇、想要，所以才嘗試、探索</div>
+    <p class="about-desc">一起享受運動的過程中，讓跑步成為生活中「有意思」的樣子。從這開始種下屬於自己初心的種子，成為一位快樂的跑者 🧡</p>
+    <div class="about-chips">
+      <span class="about-chip">跑步訓練</span>
+      <span class="about-chip">肌力課程</span>
+      <span class="about-chip">運動防護</span>
+      <span class="about-chip">快樂跑者</span>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">🥇</div>
-      <h3>薇安 教練</h3>
-      <p>體適能訓練 / 樂齡訓練 / 核心訓練</p>
-      <ul>
-        <li>2024 馬祖北竿 12.5K 總冠軍</li>
-        <li>2023 冬山河超馬 21K 總冠軍</li>
-        <li>樂齡有氧 3年 ｜ 跑步肌力 2年</li>
-      </ul>
-      <a href="coaches.html" class="feature-btn">查看完整介紹</a>
+  </div>
+</div>
+
+<!-- ⑤ 課程方案 -->
+<section class="courses-wrap reveal">
+  <div class="section-label" style="color:var(--gold-dark);">◆ 課程方案</div>
+  <h2 class="section-title">選擇你的起點</h2>
+  <div class="courses-grid">
+    <div class="c-col">
+      <div class="c-num">01</div>
+      <div class="c-icon">🏃</div>
+      <div class="c-title">初跑班</div>
+      <div class="c-time">📍 週五　台北田徑場<br>⏰ 19:30 – 21:00</div>
+      <p class="c-desc">從零開始，循序漸進建立跑步習慣。教練即時修正跑姿，與同學互相鼓勵一起成長。</p>
+      <a href="courses.html" class="c-link">了解更多 →</a>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">💪</div>
-      <h3>張冠良 Max 教練</h3>
-      <p>肌力訓練 / 核心訓練</p>
-      <ul>
-        <li>NSCA 奧林匹克舉重認證</li>
-        <li>GRAY Institute 3D Maps</li>
-        <li>10年以上多元教學經歷</li>
-      </ul>
-      <a href="coaches.html" class="feature-btn">查看完整介紹</a>
+    <div class="c-col">
+      <div class="c-num">02</div>
+      <div class="c-icon">🏅</div>
+      <div class="c-title">賽事訓練班</div>
+      <div class="c-time">📍 週四　板橋第一運動場<br>📍 週五　台北田徑場<br>⏰ 19:30 – 21:00</div>
+      <p class="c-desc">週期化賽事訓練，搭配跑步能力評估，科學突破配速瓶頸，達成目標完賽時間。</p>
+      <a href="courses.html" class="c-link">了解更多 →</a>
+    </div>
+    <div class="c-col">
+      <div class="c-num">03</div>
+      <div class="c-icon">💪</div>
+      <div class="c-title">跑者肌力班</div>
+      <div class="c-time">📍 週三　台北田徑場<br>⏰ 19:45 – 20:45</div>
+      <p class="c-desc">專為跑者設計的肌力課程，強化核心與下肢力量，讓你跑得更穩更有效率。</p>
+      <a href="courses.html" class="c-link">了解更多 →</a>
     </div>
   </div>
   <div style="text-align:center;margin-top:40px;">
-    <a href="coaches.html" class="btn-primary" style="background:#c8a84b;">查看全部師資</a>
+    <a href="courses.html" class="btn-primary" style="background:var(--gold);">查看所有課程</a>
   </div>
 </section>
 
-<!-- QUOTE -->
-<div class="quote-section reveal" style="background:#c8a84b;">
-  <blockquote class="quote-text">
-    「有意思」才會想開始<br>
-    <em>心中充滿好奇、想要，所以才嘗試、探索</em>
-  </blockquote>
-  <div class="quote-author">— 有意思跑步訓練班</div>
+<!-- ⑥ 金句 -->
+<div class="quote-wrap reveal">
+  <p class="quote-main">跑步，不是追逐數字的競賽<br><em>而是在每一次的呼吸之間，找到屬於自己的節奏</em></p>
+  <div class="quote-by">— 有意思跑步訓練班 教練團隊</div>
 </div>
 
-<!-- COURSES PREVIEW -->
-<section class="courses-preview reveal" id="courses">
-  <div class="section-label" style="color:#c8a84b;">◆ 課程方案</div>
-  <h2 class="section-title">選擇你的起點</h2>
-  <div class="courses-grid">
-    <div class="course-card">
-      <div class="course-img-box" style="background:linear-gradient(135deg,#c8a84b,#e8c96b);overflow:hidden;">
-        <img src="images/course-beginner.jpg" alt="初跑班" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<span style=font-family:Noto Serif TC,serif;font-size:40px;color:rgba(139,100,20,0.3);font-weight:900;>初跑班</span>'">
-      </div>
-      <div class="course-tags">
-        <span class="tag" style="color:#8b6f20;background:rgba(200,168,75,0.15);">新手友善</span>
-        <span class="tag" style="color:#8b6f20;background:rgba(200,168,75,0.15);">零基礎</span>
-      </div>
-      <div class="course-body">
-        <h3>初跑班</h3>
-        <ul>
-          <li><span>✓</span> 從零開始建立跑步習慣</li>
-          <li><span>✓</span> 教練即時修正跑姿</li>
-          <li><span>✓</span> 週五 北田 19:30–21:00</li>
-        </ul>
-        <a href="courses.html" class="course-btn" style="color:#8b6f20;border-color:#c8a84b;">了解更多</a>
-      </div>
-    </div>
-    <div class="course-card">
-      <div class="course-img-box" style="background:linear-gradient(135deg,#2d4a2d,#4a7c59);overflow:hidden;">
-        <img src="images/course-race.jpg" alt="賽事班" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<span style=font-size:40px;color:rgba(255,255,255,0.2);font-weight:900;>賽事班</span>'">
-      </div>
-      <div class="course-tags">
-        <span class="tag">突破成績</span><span class="tag">週期訓練</span>
-      </div>
-      <div class="course-body">
-        <h3>賽事訓練班</h3>
-        <ul>
-          <li><span>✓</span> 週期化賽事訓練計劃</li>
-          <li><span>✓</span> VDOT 配速評估</li>
-          <li><span>✓</span> 週四　板橋第一運動場　19:30 – 21:00</li>
-        </ul>
-        <a href="courses.html" class="course-btn">了解更多</a>
-      </div>
-    </div>
-    <div class="course-card">
-      <div class="course-img-box" style="background:linear-gradient(135deg,#1a1a1a,#444);overflow:hidden;">
-        <img src="images/course-strength.jpg" alt="肌力班" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<span style=font-size:40px;color:rgba(255,255,255,0.2);font-weight:900;>肌力班</span>'">
-      </div>
-      <div class="course-tags">
-        <span class="tag">核心訓練</span><span class="tag">傷害預防</span>
-      </div>
-      <div class="course-body">
-        <h3>跑者肌力班</h3>
-        <ul>
-          <li><span>✓</span> 跑者專屬肌力課程</li>
-          <li><span>✓</span> Max 教練專業指導</li>
-          <li><span>✓</span> 週三 北田 19:45–20:45</li>
-        </ul>
-        <a href="courses.html" class="course-btn">了解更多</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-banner reveal" style="background:#1a1a1a;">
+<!-- ⑦ CTA -->
+<section class="cta-wrap reveal">
   <h2>準備好開始了嗎？</h2>
   <p>加入有意思跑步訓練班，一起成為快樂的跑者 🧡</p>
-  <a href="contact.html" class="btn-primary btn-large" style="background:#c8a84b;">立即報名第十四期</a>
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+    <a href="courses.html" class="btn-primary" style="background:var(--gold);padding:16px 48px;font-size:15px;">立即報名第十四期</a>
+    <a href="contact.html" class="btn-secondary" style="color:#fff;border-color:rgba(255,255,255,0.3);padding:16px 48px;font-size:15px;">聯絡我們</a>
+  </div>
 </section>
 
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand" style="color:#c8a84b;">有意思跑步訓練班</div>
+    <div class="footer-brand" style="color:var(--gold);">有意思跑步訓練班</div>
     <div class="footer-links-group">
       <a href="index.html">首頁</a>
       <a href="coaches.html">師資介紹</a>
