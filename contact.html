@@ -16,8 +16,6 @@
     <li><a href="coaches.html">師資介紹</a></li>
     <li><a href="courses.html">課程方案</a></li>
     <li><a href="calculator.html">跑步工具</a></li>
-    <li><a href="supplement.html">補給站</a></li>
-    <li><a href="nutrition.html">補給指南</a></li>
     <li><a href="contact.html">聯絡我們</a></li>
     <li><a href="courses.html" class="nav-cta">立即報名</a></li>
   </ul>
@@ -48,7 +46,6 @@
         </div>
       </div>
     </div>
-
     <h3 style="font-family:'Noto Serif TC',serif;margin:40px 0 16px;font-size:20px;">社群媒體</h3>
     <div class="social-links">
       <a href="https://www.instagram.com/joyce.runclub" target="_blank" class="social-link">
@@ -62,24 +59,24 @@
   </div>
 
   <div class="contact-form-col">
-    <h2 class="section-title">傳送訊息</h2>
+    <h2 class="section-title">報名 / 詢問</h2>
     <p style="color:var(--muted);font-size:14px;margin-bottom:28px;">填寫表單後我們將盡快回覆你</p>
-    <form class="contact-form" onsubmit="handleSubmit(event)">
+    <div class="contact-form" id="contact-form">
       <div class="form-group">
         <label>姓名 *</label>
-        <input type="text" placeholder="你的名字" required />
+        <input type="text" id="f-name" placeholder="你的名字">
       </div>
       <div class="form-group">
-        <label>電話</label>
-        <input type="tel" placeholder="0912-345-678" />
+        <label>電話 *</label>
+        <input type="tel" id="f-phone" placeholder="0912-345-678">
       </div>
       <div class="form-group">
-        <label>信箱 *</label>
-        <input type="email" placeholder="your@email.com" required />
+        <label>LINE ID</label>
+        <input type="text" id="f-line" placeholder="你的 LINE ID">
       </div>
       <div class="form-group">
-        <label>有興趣的課程 / 服務</label>
-        <select>
+        <label>有興趣的課程</label>
+        <select id="f-course">
           <option value="">請選擇...</option>
           <option>初跑班</option>
           <option>賽事訓練班</option>
@@ -92,13 +89,18 @@
         </select>
       </div>
       <div class="form-group">
-        <label>訊息內容 *</label>
-        <textarea rows="5" placeholder="告訴我們你的目標或問題..." required></textarea>
+        <label>訊息內容</label>
+        <textarea id="f-msg" rows="4" placeholder="告訴我們你的目標或問題..."></textarea>
       </div>
-      <button type="submit" class="btn-primary" style="width:100%;font-size:15px;padding:16px;background:#c8a84b;">送出訊息</button>
-    </form>
-    <div id="form-success" class="form-success hidden">
-      ✅ 訊息已送出！我們會盡快與你聯繫 🧡
+      <button type="button" class="btn-primary" onclick="submitContact()" id="submit-btn"
+        style="width:100%;font-size:15px;padding:16px;background:#c8a84b;border:none;cursor:pointer;">
+        送出資料 →
+      </button>
+    </div>
+    <div id="form-success" style="display:none;text-align:center;padding:40px;background:rgba(200,168,75,0.08);border:1px solid rgba(200,168,75,0.2);">
+      <div style="font-size:40px;margin-bottom:16px;">🎉</div>
+      <h3 style="font-family:'Noto Serif TC',serif;font-size:20px;margin-bottom:12px;">資料已送出！</h3>
+      <p style="color:var(--muted);font-size:14px;line-height:1.9;">我們會盡快透過 LINE 或電話與你聯繫 🧡</p>
     </div>
   </div>
 </section>
@@ -116,12 +118,34 @@
     <div class="footer-copy">© 2025 有意思跑步訓練班. All rights reserved.</div>
   </div>
 </footer>
+
 <script src="js/main.js"></script>
 <script>
-function handleSubmit(e) {
-  e.preventDefault();
-  document.querySelector('.contact-form').style.display='none';
-  document.getElementById('form-success').classList.remove('hidden');
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIsQiedinZtKGU905TeE3Kk3WaFVLZ6iSsqM2VZ4wwrXd0cqsS2gfosO6WU_ENbLPY/exec';
+
+async function submitContact() {
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  if (!name || !phone) { alert('請填寫姓名和電話'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = '送出中...';
+  btn.disabled = true;
+
+  const formData = new FormData();
+  formData.append('timestamp', new Date().toLocaleString('zh-TW'));
+  formData.append('name', name);
+  formData.append('phone', phone);
+  formData.append('line', document.getElementById('f-line').value);
+  formData.append('course', document.getElementById('f-course').value);
+  formData.append('message', document.getElementById('f-msg').value);
+
+  try {
+    await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body: formData });
+  } catch(e) { console.log(e); }
+
+  document.getElementById('contact-form').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
 }
 </script>
 </body>
